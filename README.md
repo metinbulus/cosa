@@ -6,7 +6,7 @@ install.packages("cosa")
 library(cosa)
 ```
 
-A limited version of BCOSA is implemented in the shiny app (e.g., equal cost, fixed `p`), along with power and MDES functions. Live shiny app at: <br>
+A limited version of BCOSSA is implemented in the shiny app (e.g., equal cost, fixed `p`), along with power and MDES functions. Live shiny app at: <br>
 <https://cosa.shinyapps.io/index/> <br>
 
 **cosa** implements bound constrained optimal sample size allocation (BCOSSA) framework described in Bulus & Dong (2019) for multilevel regression discontinuity designs (MRDDs) and multilevel randomized trials (MRTs) with continuous outcomes. It also includes functions to compute power rate or minimum detectable effect size. BCOSSA functions are designed to optimize proportion of treatment allocation (`p`) and sample size (generically, `n`) at one or more levels subject to budget, statistical power, or effect size constraints along with constraints on `n` and `p`. Constraints on `n` and `p` can be in the form of fixed values or bound constraints (aka box constraints).
