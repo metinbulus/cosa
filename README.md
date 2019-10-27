@@ -1,4 +1,4 @@
-# Bound Constrained Optimal Sample Allocation (BCOSA)
+# Bound Constrained Optimal Sample Size Allocation (BCOSSA)
 
 To install and load the package:
 ```{r}
