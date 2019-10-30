@@ -18,8 +18,7 @@ Note: `n` and `p` should be omitted (or specified as `NULL`) for optimization. `
 
 ```{r}
 score.obj <- inspect.score(rnorm(10000), cutoff = 0,
-                           order = 2, interaction = TRUE)
-                           
+                           order = 2, interaction = TRUE)                     
 power.crd2(score.obj,
            es = .25, rho2 = .20, g2 = 0, r22 = 0,
            n1 = 50, n2 = 100)
@@ -27,14 +26,12 @@ power.crd2(score.obj,
 # with 5 blocks df = n2 - 2*(n blocks) - order * (1 + int) - g2
 # int  = 1 if interaction = TRUE
 # n2: number of level 2 units across five blocks
-
 power.crd2(score.obj, df = 100 - 2*5 - 2 * (1 + 1) - 1,
            es = .25, rho2 = .20, g2 = 0, r22 = .30,
            n1 = 50, n2 = 100)
 
 # compare
 # n2: number of level 2 units per block, n3: number of blocks
-
 power.bcrd3f2(score.obj, 
               es = .25, rho2 = .20, g2 = 0, r22 = .30,
               n1 = 50, n2 = 20, n3 = 5)
@@ -45,7 +42,6 @@ power.bcrd3f2(score.obj,
 score.var <- rnorm(10000)
 
 # second order polynomial order
-
 cosa.bcrd3f2(score.var, cutoff = .50, treat.lower = TRUE,
              order = 2, interaction = FALSE,
              constrain = "power", power = .80,
@@ -53,15 +49,17 @@ cosa.bcrd3f2(score.var, cutoff = .50, treat.lower = TRUE,
              n1 = c(20, 60), n2 = NULL, n3 = 5)
              
 # second order polynomial order interacting with treatment
-
 cosa.bcrd3f2(score.var, cutoff = .50, treat.lower = TRUE,
-             order = 3, interaction = TRUE, 
+             order = 2, interaction = TRUE, 
              constrain = "power", power = .80,
              rho2 = .20, g2 = 0, r22 = .30,
              n1 = c(20, 60), n2 = NULL, n3 = 5)
 ```
 
 **Suggested citation**:
+References
+
+Bulus, M. (2019). Minimum Detectable Effect Size Computations for Cluster-Level Regression Discontinuity: Quadratic Functional Form and Beyond. Retrieved October 30, 2019, from arXiv.org website: https://arxiv.org/abs/1910.12925
 
 Bulus, M., & Dong, N. (2019). Bound Constrained Optimization of Sample Sizes Subject to Monetary Restrictions in Planning of Multilevel Randomized Trials and Regression Discontinuity Studies. *The Journal of Experimental Education*. Advance online publication. <https://doi.org/10.1080/00220973.2019.1636197>
 
