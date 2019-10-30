@@ -57,9 +57,8 @@ cosa.bcrd3f2(score.var, cutoff = .50, treat.lower = TRUE,
 ```
 
 **Suggested citation**:
-References
 
-Bulus, M. (2019). Minimum Detectable Effect Size Computations for Cluster-Level Regression Discontinuity: Quadratic Functional Form and Beyond. Retrieved October 30, 2019, from arXiv.org website: https://arxiv.org/abs/1910.12925
+Bulus, M. (2019). Minimum Detectable Effect Size Computations for Cluster-Level Regression Discontinuity: Quadratic Functional Form and Beyond. Retrieved October 30, 2019, from arXiv.org website: <https://arxiv.org/abs/1910.12925>
 
 Bulus, M., & Dong, N. (2019). Bound Constrained Optimization of Sample Sizes Subject to Monetary Restrictions in Planning of Multilevel Randomized Trials and Regression Discontinuity Studies. *The Journal of Experimental Education*. Advance online publication. <https://doi.org/10.1080/00220973.2019.1636197>
 
