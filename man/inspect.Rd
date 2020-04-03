@@ -18,10 +18,10 @@
   \item{p}{proportion of units in treatment condition.}
   \item{cutoff}{cutoff.}
   \item{treat.lower}{logical; if \code{TRUE} subjects below cutoff are treated.}
-  \item{mu}{mean of truncated normal - applies when \code{score = NULL} and \code{dists = "normal"}.}
-  \item{sigma}{standard deviation of truncated normal - applies when \code{score = NULL} and \code{dists = "normal"}.}
-  \item{k1}{left truncation point for empirical, truncated normal, or uniform distribution.}
-  \item{k2}{right truncation point for empirical, truncated normal, or uniform distribution.}
+  \item{mu}{mean of (uncentered) truncated normal - applies when \code{score = NULL} and \code{dists = "normal"}.}
+  \item{sigma}{standard deviation of (uncentered) truncated normal - applies when \code{score = NULL} and \code{dists = "normal"}.}
+  \item{k1}{left truncation point for (uncentered) empirical, truncated normal, or uniform distribution.}
+  \item{k2}{right truncation point for (uncentered) empirical, truncated normal, or uniform distribution.}
   \item{dists}{char; type of distribution, "normal" or "uniform".}
   \item{ndraw}{number of draws - applies when \code{sim = TRUE}.}
   \item{nsim}{number of simulations - applies when \code{sim = TRUE}.}
