@@ -10,7 +10,7 @@
       round(object$mdes[1], 3), " ", 100 * (1 - round(object$parms$alpha, 2)),
       "% CI [", round(object$mdes[2], 3), ",", round(object$mdes[3], 3), "]",
       "\n---------------------------------------\nDegrees of freedom: ", object$df,
-      "\nStandardized standard error: ", round(object$sse, 3), "\nType I error rate: ", object$parms$alpha,
+      "\nStandardized standard error: ", round(object$sse, 3), "\nType I error rate: ", round(object$parms$alpha, 3),
       "\nType II error rate: ", round(1 - object$parms$power, 3), "\nTwo-tailed test: ", object$parms$two.tailed,
       "\n--------------------------------------- \n", score.info,
       "\n", sep = "")

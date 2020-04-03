@@ -214,7 +214,7 @@ cosa.bcrd3f2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6, rhots 
   fun <- "cosa.bcrd3f2"
   lb <- c(1, g2 + order * (1 + interaction) + 3, 1)
   if(!is.null(n2)) {
-    if(n2[1] < lb[2]) stop("Lower bound for 'n2' violate minimum degrees of freedom requirement", call. = FALSE)
+    if(n2[1] < lb[2]) warning("Lower bound for 'n2' may violate minimum degrees of freedom requirement", call. = FALSE)
   }
 
   .df <- quote(n3 * (n2 - 2) - g2 - order * (1 + interaction))

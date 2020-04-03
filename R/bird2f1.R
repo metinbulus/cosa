@@ -208,7 +208,7 @@ cosa.bird2f1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6, rhots 
   fun <- "cosa.bird2f1"
   lb <- c(g1 + order * (1 + interaction) + 3, 1)
   if(!is.null(n1)) {
-    if(n1[1] < lb[1]) stop("Lower bound for 'n1' violate minimum degrees of freedom requirement", call. = FALSE)
+    if(n1[1] < lb[1]) warning("Lower bound for 'n1' may violate minimum degrees of freedom requirement", call. = FALSE)
   }
 
   .df <- quote(n2 * (n1 - 2) - g1 - order * (1 + interaction))
