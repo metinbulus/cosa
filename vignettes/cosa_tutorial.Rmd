@@ -82,7 +82,7 @@ plot(crd2, ypar = "power", xpar = "n2",
 
 ```
 
-As seen from the MDES and power plots, a little less than 150 clusters are needed to obtain the benchmark power rate of 80% for the CRT (more than 200 clusters for the CRD). Precise number of clusters can be found via placing the primary constraint on either the effect size or power rate. 
+As seen from the MDES and power plots, a little less than 150 clusters are needed to obtain the benchmark power rate of 80% for the CRT, more than 350 cluster are needed for CRD with linear score variable interacting with the treatment, and more than 650 clusters are needed for CRD with quadratic score variable interacting with the treatment. Precise number of clusters can be found via placing the primary constraint on either the effect size or the power rate. 
 
 ## Primary Constraint on the Effect Size
 
