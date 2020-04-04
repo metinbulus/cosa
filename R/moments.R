@@ -328,7 +328,7 @@ inspect.score <- function(score = NULL, p = NULL, cutoff = NULL,
   }
 
   class(score.out) <- "score"
-  cat("---------------------------------------",
+  cat("\n---------------------------------------",
       "\nPolynomial order =", order, "\nInteraction w/ treatment =",  interaction,
       "\nTreat if score < cutoff =", treat.lower,
       "\nCutoff =", round(cutoff,3), "| p =", round(p,3), "\nRDDE =", round(rdde,3), "\n\n")
