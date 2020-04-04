@@ -1,0 +1,3725 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Metin Bulus &amp; Nianbo Dong" />
+
+<meta name="date" content="2020-04-05" />
+
+<title> Bound Constrained Optimal Design of Multilevel Regression Discontinuity Designs and Randomized Controlled Trials</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore"><span style="color: grey;"> Bound Constrained Optimal Design of Multilevel Regression Discontinuity Designs and Randomized Controlled Trials </span></h1>
+<h4 class="author">Metin Bulus &amp; Nianbo Dong</h4>
+<h4 class="date">2020-04-05</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#primary-constraint-on-the-total-cost">Primary Constraint on the Total Cost</a></li>
+<li><a href="#primary-constraint-on-the-effect-size">Primary Constraint on the Effect Size</a></li>
+<li><a href="#primary-constraint-on-the-power-rate">Primary Constraint on the Power Rate</a></li>
+</ul>
+</div>
+
+<p>To install and load the package:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;cosa&quot;</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">library</span>(cosa)</a></code></pre></div>
+<p>The following examples demonstrate how to perform bound constrained optimal sample size allocation (BCOSSA) for a two-level cluster randomized trial (CRT) and for the corresponding cluster-level regression discontinuity (CRD) design under three primary constraints. Note: <code>NULL</code> arguments are provided for clarity, otherwise they do not have to be explicit.</p>
+<div id="primary-constraint-on-the-total-cost" class="section level2">
+<h2>Primary Constraint on the Total Cost</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># cost constrained - optimize p and n2</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co"># CRT(&#39;order = 0&#39; or &#39;rhots = 0&#39;)</span></a>
+<a class="sourceLine" id="cb2-3" title="3">crt &lt;-<span class="st"> </span><span class="kw">cosa.crd2</span>(<span class="dt">order =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb2-4" title="4">                 <span class="dt">constrain =</span> <span class="st">&quot;cost&quot;</span>, <span class="dt">cost =</span> <span class="dv">12500</span>, </a>
+<a class="sourceLine" id="cb2-5" title="5">                 <span class="dt">cn1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">cn2 =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb2-6" title="6">                 <span class="dt">es =</span> <span class="fl">.20</span>,  <span class="dt">power =</span> <span class="fl">.80</span>, <span class="dt">rho2 =</span> <span class="fl">.20</span>,</a>
+<a class="sourceLine" id="cb2-7" title="7">                 <span class="dt">g2 =</span> <span class="dv">1</span>, <span class="dt">r21 =</span> <span class="fl">.20</span>, <span class="dt">r22 =</span> <span class="fl">.30</span>, </a>
+<a class="sourceLine" id="cb2-8" title="8">                 <span class="dt">p =</span> <span class="ot">NULL</span>, <span class="dt">n1 =</span> <span class="dv">20</span>,  <span class="dt">n2 =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## Solution converged with LBFGS 
+## 
+## Rounded solution: 
+## --------------------------------------------------- 
+##  [n1]  n2     p [cost]  mdes 95%lcl 95%ucl power
+##    20 132 0.386  12510 0.209  0.063  0.356 0.764
+## --------------------------------------------------- 
+## Per unit marginal costs: 
+##  Level 1 treatment: 5 
+##  Level 1 control: 2 
+##  Level 2 treatment: 50 
+##  Level 2 control: 20 
+## --------------------------------------------------- 
+## MDES = 0.209 (with power = 80) 
+## power = 0.764 (for ES = 0.2) 
+## --------------------------------------------------- 
+## []: point constrained (fixed) 
+## &lt;&lt;: bound constrained 
+## Random assignment design</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># comparisons to CRDs</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co"># CRD w/ linear score variable interacting with the treatment</span></a>
+<a class="sourceLine" id="cb4-3" title="3">crd1 &lt;-<span class="st"> </span><span class="kw">cosa.crd2</span>(<span class="dt">order =</span> <span class="dv">1</span>, <span class="dt">interaction =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb4-4" title="4">                  <span class="dt">constrain =</span> <span class="st">&quot;cost&quot;</span>, <span class="dt">cost =</span> <span class="dv">12500</span>,</a>
+<a class="sourceLine" id="cb4-5" title="5">                  <span class="dt">cn1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">cn2 =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb4-6" title="6">                  <span class="dt">es =</span> <span class="fl">.20</span>,  <span class="dt">power =</span> <span class="fl">.80</span>, <span class="dt">rho2 =</span> <span class="fl">.20</span>,</a>
+<a class="sourceLine" id="cb4-7" title="7">                  <span class="dt">g2 =</span> <span class="dv">1</span>, <span class="dt">r21 =</span> <span class="fl">.20</span>, <span class="dt">r22 =</span> <span class="fl">.30</span>,</a>
+<a class="sourceLine" id="cb4-8" title="8">                  <span class="dt">p =</span> <span class="fl">.386</span>, <span class="dt">n1 =</span> <span class="dv">24</span>,  <span class="dt">n2 =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<pre><code>## RDDE for normal distribution 
+##  based on population moments--------------------------------------- 
+## Polynomial order = 1 
+## Interaction w/ treatment = TRUE 
+## Treat if score &lt; cutoff = TRUE 
+## Cutoff = -0.29 | p = 0.386 
+## RDDE = 2.736 
+## 
+## Solution converged with LBFGS 
+## 
+## Rounded solution: 
+## --------------------------------------------------- 
+##  [n1]  n2   [p] [cost]  mdes 95%lcl 95%ucl power
+##    24 116 0.388  12478 0.364  0.109  0.619 0.338
+## --------------------------------------------------- 
+## Per unit marginal costs: 
+##  Level 1 treatment: 5 
+##  Level 1 control: 2 
+##  Level 2 treatment: 50 
+##  Level 2 control: 20 
+## --------------------------------------------------- 
+## MDES = 0.364 (with power = 80) 
+## power = 0.338 (for ES = 0.2) 
+## --------------------------------------------------- 
+## []: point constrained (fixed) 
+## &lt;&lt;: bound constrained 
+## Regression discontinuity design</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># CRD w/ quadratic score variable interacting with the treatment</span></a>
+<a class="sourceLine" id="cb7-2" title="2">crd2 &lt;-<span class="st"> </span><span class="kw">cosa.crd2</span>(<span class="dt">order =</span> <span class="dv">2</span>, <span class="dt">interaction =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb7-3" title="3">                  <span class="dt">constrain =</span> <span class="st">&quot;cost&quot;</span>, <span class="dt">cost =</span> <span class="dv">12500</span>,</a>
+<a class="sourceLine" id="cb7-4" title="4">                  <span class="dt">cn1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">cn2 =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb7-5" title="5">                  <span class="dt">es =</span> <span class="fl">.20</span>,  <span class="dt">power =</span> <span class="fl">.80</span>, <span class="dt">rho2 =</span> <span class="fl">.20</span>,</a>
+<a class="sourceLine" id="cb7-6" title="6">                  <span class="dt">g2 =</span> <span class="dv">1</span>, <span class="dt">r21 =</span> <span class="fl">.20</span>, <span class="dt">r22 =</span> <span class="fl">.30</span>,</a>
+<a class="sourceLine" id="cb7-7" title="7">                  <span class="dt">p =</span> <span class="fl">.386</span>, <span class="dt">n1 =</span> <span class="dv">24</span>,  <span class="dt">n2 =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<pre><code>## RDDE for normal distribution 
+##  based on population moments--------------------------------------- 
+## Polynomial order = 2 
+## Interaction w/ treatment = TRUE 
+## Treat if score &lt; cutoff = TRUE 
+## Cutoff = -0.29 | p = 0.386 
+## RDDE = 4.992 
+## 
+## Solution converged with LBFGS 
+## 
+## Rounded solution: 
+## --------------------------------------------------- 
+##  [n1]  n2   [p] [cost]  mdes 95%lcl 95%ucl power
+##    24 116 0.388  12478 0.491  0.147  0.836 0.207
+## --------------------------------------------------- 
+## Per unit marginal costs: 
+##  Level 1 treatment: 5 
+##  Level 1 control: 2 
+##  Level 2 treatment: 50 
+##  Level 2 control: 20 
+## --------------------------------------------------- 
+## MDES = 0.491 (with power = 80) 
+## power = 0.207 (for ES = 0.2) 
+## --------------------------------------------------- 
+## []: point constrained (fixed) 
+## &lt;&lt;: bound constrained 
+## Regression discontinuity design</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># example plots</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">mai =</span> <span class="kw">c</span>(.<span class="dv">6</span>, <span class="fl">.6</span>, <span class="fl">.6</span>, <span class="fl">.2</span>))</a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="co"># compare minimum detectable effect size and 95% CI</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="kw">plot</span>(crt, <span class="dt">ypar =</span> <span class="st">&quot;mdes&quot;</span>, <span class="dt">xpar =</span> <span class="st">&quot;n2&quot;</span>,</a>
+<a class="sourceLine" id="cb10-5" title="5">     <span class="dt">ylim =</span> <span class="kw">c</span>(.<span class="dv">10</span>, <span class="fl">.50</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">200</span>), </a>
+<a class="sourceLine" id="cb10-6" title="6">     <span class="dt">ylab =</span> <span class="st">&quot;MDES (with Power = .80)&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>,</a>
+<a class="sourceLine" id="cb10-7" title="7">     <span class="dt">main =</span> <span class="kw">expression</span>(CRT), <span class="dt">locate =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="kw">plot</span>(crd1, <span class="dt">ypar =</span> <span class="st">&quot;mdes&quot;</span>, <span class="dt">xpar =</span> <span class="st">&quot;n2&quot;</span>,</a>
+<a class="sourceLine" id="cb10-9" title="9">     <span class="dt">ylim =</span> <span class="kw">c</span>(.<span class="dv">10</span>, <span class="fl">.50</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">200</span>),</a>
+<a class="sourceLine" id="cb10-10" title="10">     <span class="dt">ylab =</span> <span class="st">&quot;MDES (with Power = .80)&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>,</a>
+<a class="sourceLine" id="cb10-11" title="11">     <span class="dt">main =</span> <span class="kw">expression</span>(<span class="kw">CRD</span>(S)), <span class="dt">locate =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">plot</span>(crd2, <span class="dt">ypar =</span> <span class="st">&quot;mdes&quot;</span>, <span class="dt">xpar =</span> <span class="st">&quot;n2&quot;</span>,</a>
+<a class="sourceLine" id="cb12-2" title="2">     <span class="dt">ylim =</span> <span class="kw">c</span>(.<span class="dv">10</span>, <span class="fl">.50</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">200</span>),</a>
+<a class="sourceLine" id="cb12-3" title="3">     <span class="dt">ylab =</span> <span class="st">&quot;MDES (with Power = .80)&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>,</a>
+<a class="sourceLine" id="cb12-4" title="4">     <span class="dt">main =</span> <span class="kw">expression</span>(<span class="kw">CRD</span> (S <span class="op">+</span><span class="st"> </span>S<span class="op">^</span><span class="dv">2</span>)), <span class="dt">locate =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># compare statistical power </span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="kw">plot</span>(crt, <span class="dt">ypar =</span> <span class="st">&quot;power&quot;</span>, <span class="dt">xpar =</span> <span class="st">&quot;n2&quot;</span>,</a>
+<a class="sourceLine" id="cb14-3" title="3">     <span class="dt">ylim =</span> <span class="kw">c</span>(.<span class="dv">10</span>, <span class="fl">.85</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">200</span>), </a>
+<a class="sourceLine" id="cb14-4" title="4">     <span class="dt">ylab =</span> <span class="st">&quot;Power (for ES = .20)&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>,</a>
+<a class="sourceLine" id="cb14-5" title="5">     <span class="dt">main =</span> <span class="kw">expression</span>(CRT), <span class="dt">locate =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="kw">plot</span>(crd1, <span class="dt">ypar =</span> <span class="st">&quot;power&quot;</span>, <span class="dt">xpar =</span> <span class="st">&quot;n2&quot;</span>,</a>
+<a class="sourceLine" id="cb14-7" title="7">     <span class="dt">ylim =</span> <span class="kw">c</span>(.<span class="dv">10</span>, <span class="fl">.85</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">200</span>), </a>
+<a class="sourceLine" id="cb14-8" title="8">     <span class="dt">ylab =</span> <span class="st">&quot;Power (for ES = .20)&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>,</a>
+<a class="sourceLine" id="cb14-9" title="9">     <span class="dt">main =</span> <span class="kw">expression</span>(<span class="kw">CRD</span>(S)), <span class="dt">locate =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">plot</span>(crd2, <span class="dt">ypar =</span> <span class="st">&quot;power&quot;</span>, <span class="dt">xpar =</span> <span class="st">&quot;n2&quot;</span>,</a>
+<a class="sourceLine" id="cb16-2" title="2">     <span class="dt">ylim =</span> <span class="kw">c</span>(.<span class="dv">10</span>, <span class="fl">.85</span>), <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">200</span>), </a>
+<a class="sourceLine" id="cb16-3" title="3">     <span class="dt">ylab =</span> <span class="st">&quot;Power (for ES = .20)&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Number of Clusters&quot;</span>,</a>
+<a class="sourceLine" id="cb16-4" title="4">     <span class="dt">main =</span> <span class="kw">expression</span>(<span class="kw">CRD</span> (S <span class="op">+</span><span class="st"> </span>S<span class="op">^</span><span class="dv">2</span>)), <span class="dt">locate =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;
+
+## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAHgCAMAAABNUi8GAAAAzFBMVEUAAAAAADoAAGYAOjoAOmYAOpAAZrY6AAA6ADo6AGY6OmY6OpA6ZpA6ZrY6kLY6kNtmAABmADpmAGZmOgBmOjpmOpBmZrZmZv9mkNtmtttmtv9/f/+AAACQOgCQOjqQOmaQZjqQZpCQtpCQ27aQ29uQ2/+jo/+zM3+2ZgC2Zjq2Zma225C2/7a2/9u2//+/P3/MzP/RUX/ZGT/bkDrb25Db27bb2//b///fHz/mZn/zMz/5GR//Pz//f3//tmb/25D/29v//7b//9v///9prZYvAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO2dC3vctrGG6bSWnLqplDSNT1dW0p5G8SYntdVuWsU50W53+f//UwmQ3OUFlwEwAwx3533aWKZIGh/xETcCg6oWBMZUpRMgCC7EoAJrxKACa8SgAmvEoAJrxKACa8SgAmvEoAJrxKACa8SgAmvEoAJrxKACa8SgAmvEoAJrxKACa8SgAmvEoAJrxKACa8SgAmvEoAJrxKACHfvb6pP3abcQgwp0bFb15ibtFmLQbOw+O/74/UPBdORlu0q7XgyKyu66qq7aPypVu7U/6EJk+/KpPtxX+veH+8RsWwz7Pz2l3aCYQSdZ2f5ZvVh20bJtPHm4v6p3n6qW1/rlk/5hf9s4dP+VOqLNqf7zTWLTjAeDSsHM/ov3idVFKYPOsrLuflwy+1tVMO5ePbRSmv+2Pyix6+ZX+88f6k7n9qpsUuEAK4UR/UEtNa26KGTQeVaeg0G3fZd1YtDGmNqbuvAcnrEAwJXCkP7gWls5qbooZNB5Vi4oz6yoEkXT5WafrU0Z0jn1ti9t2sKUPwGVwuCiycGU6qKUQWdZeV4G7avBo0GPb2Tj0au6z3j+BFQKzV/+2uqflqgpOVvcoKcWzRkYdJibu+tVr6nJyu1pwLopjhZkUHilcDLo6GCdVl1wqOJ1Vp6DQVvXNf9t+0EvHupjfdge+aTL2+VU8QGVwsCgw4N12ttYtJM0zMpzMGi9aYQc7ruOxKhH0dWHKrs3SxqygFcKuudeVS+fhgdbFmjQeVYuJ89cbAfDK02+XLXljsqetc6jdZ+FSxlmCqgUTiXo6GC9yCp+npXnYVA7k08qPyxFK7xSGHaSBgfrRXaSLpDtcNZE6hfqjIArhWEbdD2q7Bc4zHSJbE7ZtF5IBe8G/J09pboQgwrRbGFT6ZKqCzGoEM8GUhOkVRdiUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNQCDqhB6m+EaqDND9HEGZlC1LG/3eqywouRt3GVRjyCbvkhRAy5QH8ygKtC4ehHnVz72vHnz6CLwoT4Hnj9MUigwfVbeeJSf+Ag45zvXkyLQV38HTLydN/0TgOizYdU3OrZRLp6t1Nvfvvzpf+aLTIMM6nzuBmgMmqLPlT/ATIBloONREehDMOjRodQG3bbaNtVsleju+sXDKdLO6MpBKgEpAENh0DR9zvyBZQIwA+0OJdCHYdD+ERAbVMfL1cDW2YcZNLAIJTBooj5n7sAcCs5A28Mi0IdjUO3Qpg0afwOrPniz5tSGGbZoR0l0EebQnG3QDo8+T+5ACChhzE+LQB+SQZtnUL375WO8Q636RlW8ArzPxjQDvbkU9ViD8FWBSfqcuQNthoL5zmRRAn1YBn2s3r179zHeoVZ9p2NdtLzpaIRH4Omf8GcS8MnF48zAVH0OCAxqtCiBPlSDviM1aFcFTEcjaturGWzQkEqeog2aqM8FzKGhnYjZAyPQh2fQj+/++e5djhJ0FsvR8mqGl6BlDZqqzwnIoeG93EkpSqAPzaCNQ//5roquSaz6BsfawI/zNozl1ZxlIKZDKTpJqfpcEBl0UooS6MMzqOrFgwc0Zlj1ATqGllczwqDwSj5nLx6qzwkkZ+LGCQcPjUAfWCCAjwFDblOs+kYl6Iu/Gff3Nr+aMSUo2KE0JWiaPjeAnIkdyD4+NQJ9mEWo0hfrUKu+QRv0m/cq6jg4bG6MQcGVPEUbNFWfG0KDHi1KoA/boNqhERa16hv14lUzxdALdAkc/BuwhMFuTtOLT9PnwS8/5VPgI5E+dINGOnSUJFMyj29gwjghJF3ASp6uBKUYB+3le/STfKtO1Idv0Lhq3qpv9CXJ0oZxCRz+I6B0hc5rCsH3pSVRn4f4LiwAKn2YBj0SUYha9cV/3jVkICxV0f8iMEmoNwt5yJQOpdJHYtCIR2HVNzuW0kaDJQpShtINM5G1QR+9VQhtFR+nj6KKV4QWolZ9BUpQSBlaYDaT+WYBz/jR59AsBg3UR2XQ0ELUqg/ZoFgOXahB3U/gsgwaVoha9aEaFFyEeh26VIM6HcrToAmJmjDTF+BQq74yBvU2Q5dsUOsz4GlQvCJ0rg9eiFr1YRs0rEy3sliDuhx6eQaFW9Sqb3RsvdrCl/cbMzCgXey8OY1B0/UBsOcIuUEj9NXEBoU61KqvnEGdDl2wQe0OvUiDAi1q1YduULBDCT4p8TAoyYA9lb6aaKR+BMCiVn3IBg0pQvEdysSgFA6l0lfnMCjAolZ9UIMevp7O1E426KOjls9exUP1wTBnR8kq3qYvWqIBl743Hota9QE6hvvbdh31J5AZ52Flh7UQzRqbKUQfEGNuFOrFO/UpsIpQtz63Ra36IJp31zfwEiasCLU5NOswU5A+IKbMKDXM5NKnyGNQt0Wt+mCaNy++hRsUw6GZx0ED9EEx5EW5cVC7PkUug7osatU3POaYCHO4n60WtGVgYP/A7FASg+LogzLPCmqDxuhT5DOo3aJWfUCDWq80JiFQmOHmuQ1qvVlC5s1yoqBBrfoUCcmK0Ge2qFXfpBcPku8JrhVsUEMhStWLD9aXVLpMMiJDLz5YX7rIcH0mi1r1jUrQW0Nnz4rDoOkOpSlBI/Sl5d04I8hL0Ah9CCIj9M0tatWHO1mk/9dDpSGN2RNMpkjMO7Qheyp9GCKjmHjUqm90rHkF/zzr7YUH14rJExSL+jIwQl9q3mE5lEofisg4Rha16hseO9yv1qv5stXg4FpReTJ2KEkVH6MvOe8GuUBdxcfowxEZqW9gUau+SS9+vZp3BcODa8WVGkOLUvXig/Uh7jGQoxcfrK/GUhmn703vUau+WQk6/5obEVwrrlobOJSuBA3Uh5F1fTmRpQQN1FejqYzV11r0zqZv1otHCa4V2fA6hcOk68VTBQ9zoh1Ks8lAor6WkgZtnw7IoHqjndk2OzacGRjbM+gdSvSpM1wf3i4YRJsMpOpDFEm/kZfWmDwOqojvu7YWpfsWH6gPbReM6t27f1JsMpCqT4OjMYNB11V1BZPnqwLjB1e0Q4kMGq4Pc5MBkhjuqfoQVZIbdH/r+lRmvtL2D6YM/zUWJWqDhutjv8lAqj5ElYsqQdO2ZokctudcgjYO/fiuin4qZPqQVcZi1Tc7tkVpg6buHWTcxwqYJDeB+jA3Gaiq2PjDAW3QUH3YKiOx6hsf2+KVoGkO/RhlUW8GhuvDzLo+hjtqiOxUfTWezAxtULC62m/QJIcqreEW9bbRwvUh74LxiB4iO1VfxyIMGga5QcMtSjLbhyZEdtSkbqrZTEgy6Q2qPkUghshOcGivNcyigNk+JUNknzIw3KJ0+vBkkhtUf7QFL/0HfAqMd+hJa4hF/d+qg/Wxj0CcrA9PJn0bVM13wQyRHT8ZcqQVbFH/bB82IbJDLUqnD0/m8krQeIdOtAKL0QWVoI+BHXo6fT3pOhfXBn2Mr+RnWkEWXUwbtAfuUTp9PUswqIVt9eJ/r2fKYdPRsNbkKIt6PRrZy3XpQx1nMgC1KJ2+nrJj9VZ9g2O768pYPRy+fthdr2L3U8dzqL8YdWdglL6aPOfegDxKqC+Tzkh9p2Mqes/GNJuwaXYfvplvAgmd0BvlUFtt4S5GnRkYp6+mD/AKsiihPjSdxFW8ErD7zKS8XTIw3UY3wKDhDnVodVjUmYFx+uoMBn0EeJRQH5rOHAY17kS6e/XQNGSil0TEONSp1VqM+jMwWF+dx6BeixLqO5IqtJhBzYANGuNQn1azRyMz0KUPKBFFlMujhPqOcDeoOc7p6AF017hjM80JdyhAq8Gj7gyM0oeRcXBRdotS6sMSurTJIgOCHQrTOvUo0WSKnOEJe49OHxelPiyhCzZosEPBWkcepcrAItHfgMG1MPQhCS04UI+wbjzMokFajx6NHsjOE7soQNTMo6T6kISWMmhwbCYz8TNHALQWjcvAbLGLwhh7FJpZUfoKK3XqGx3bGBvZ4bGZzJA61P7M0/QVzbaBR0n1lVcKnG73+Tx0Xx0Vm8lMgEODawv7M0/T11Iu8kbvUWtoGBR9OErzzAc1gBe7CGxRGoNG6GthHLsIRR+OUvo26AYvcIMFqENJDBqjr4Vx7CIUfThSCw/Um68MTQhwdhmBQeP0tSzBoCn6cKQueRz0BMyhNCVohL4OvqFhcPShSF3emiQzEIvStUHj1uwswqBJa5IQtBIb9HDfVhGYa5Is+C1KYNA4fR0LMGiSviGPsWKL9eJdAuOS43Vo1l68S18P28gbSPowtJJPt/u/DJ2knrBFtwkCE/UdKRxei1xfYa3WJI2PoYUAB4BrUd8zj9V3hL1BE/UNia7kCfTNjuGEAAfhsChdLz4qRHbNN7ABlr4RcQ5lGcA2dbNVi0WJDBod4DVVaZyorPpGRDmUZQhwhL0sTRal6STFh8hOVxojKqu+dLXnV4IqzBZlWIIyXfWIpy9ZbZ4vSYEhpJG2Cpx6lK4NGhciG0VqljZovL5kuRkMGh5CGm2fq7FFiQwaHyIbQyu9QdP0TQhuhy4tBHgQk2KUqA0aHyJbwd2gqfqmhDq02GSR3bV6Ly0zsvGGzIYezTpZxKlvCMdVj5j6pgQ6lPpL0lf9Tz+MlagZ2U3LhtygA4uqHVuQBKbqG1FutD6Pvin5RuytSRoc27ZfITbVZLCimyTzI71BHzuPVu+Cd7UEPPM4fSM4GxRD34xsDrUmaTyjXn3LnX0rU2HTGoVfmte0oCt48yZmW0vQM4/RNyZJLf2M+mR9M0IcWrANqt7J6fhFfyX+O9Ztaxn0qT7gmQfqG5FUopRrg4L1JUlmOaOexqAff2n3tYR7NFGMQ9+YJRo0RJ8BsEMLG3QafOrtc8t3jx87HrF+evvL///y9uPHN2/etQCu1Ul5CxYToK+un4c//SNe3y8JzyabPsNPHz/+o5w+jiVoU4a+7Vqgb47EvoHJ+qYwW7ODrs8ErBClLkHVXIN1xC4RFA6d7XnlMyngmcfqm8JrzQ6+PhOPEItSG3S9UpvsGPbZ8QSfojaowmtSwDOP1TeD1ZIIAn1GABbNEGF5c2NY2OILPpXDoAqnSf3PPFrfjNiuPPG6eDR9sbLpDapGzOYCvcGnMg5fv7G51P/M4/XN4LQkgkKfVTedcGuSTseaF03Fl9rMJhx4g0/lzq83Bpv6n3m8PgPZHZpZnw0yi1qTNDi2u65Wh3vDsmpv8Cn8RIPDufcuBTzzeH0GYjKKuA2Kqs8u3K6c6UB9XcagmpNHIdHfovWZiHDocoeZRlgtyteg+A4N0VrGoBEOPROD6knAJvEZevHrVVxsn6IGdQtE0WeGxYReQn1O7QbxjA2K7tBFGJTFhF5KfR71U/mcDYrduVuGQQN1n5lB66lHORsUuwhdikGDxl3Oz6Dj5ijLCMtHcB3KLMKyi8LzJcn1+XnsTMq4F18X+boCEoilzwHhBxYW+gCoJCY9BGuS0Axa2KGJYgD6XNBbtKw+EI8pT8GapOExvaQFHN5ndjfMPCJZdpyozwkkc6jHQSn1QXhOKEmtSRpOt1NfyQ730ACT87shOpTCoMn6PHizhnq6HbE+L8/tHyq5wVawJmnci6/nk16sGO6GV9ER9eIT9fnwZAx9L55Yn4fnwc8qzSFusCYJ1aB4Dl2mQWu3Ry/JoAqdcKAjrEnCNSiaQxdrUFdf4dIM2tKm3+cLa5LQxkH75BTalM2RJFR9MB6NOXKu46A9ZoO2tCrs5rAmCW+Y6ZiSIju2JIqB64OiEpXjW3U0eQ3a0moxGcSaJHSD4hSiyzeoQiVs8DDEoB2dpu8g+k7H+p3KZlWEpe6wC8zxZSU8A/H0BTHNiXPTl0Cv7TuXvsGxjW2Ud//5g+GoS2B+i3qThKovkGM2nKm+VHqB/ip+bW5jG9Za+wQmZgjdJgpI+iLQomKfCixJRfXBq3gboDYoWhD+JIty3EQhGZWBOrERDwacpML6kvAaVDVjrPqmwaf8AhMsSmNQZH2hnDKwTTPKl5YhbPRF4m2DTlemBt9tRqxHKQxKoS8I45cW4BMCJImdvmAie/EBdzMAzYExhPvF86sCew2u5+RPEl99YGLHQVODT0V4NOs4KEpwLQC+DHQZNSVJXPR5iTQoSvCpQJPmNChWcC0voQPZw2eWkCR++mxEGtQWfIqSt3GXRT2WbPoiRQ24QH0BJeinwMZNyL2znmNB9CX8m+TnQC42B59K+EcLnWND9MX/mywMGgsLgYSIPjEo6jnYiD4xKOo52Ig+MSjqOdiIvoUbVBCSEYMKrBGDCqwRgwqsEYMKrBGDCqwRgwqsEYMKrBGDCqwhMmi7/nXriKeqpye2J1hP0+c4b6XWOVx574OP6Mulj8agattdHTDAOglxf9ukuj3Bepo+x32rzZWa7ui5Dz6iL5s+GoO2/9Du9VObvDmHb35s3q72BNtp3Tm+W9WbG/d9CBB92fTRGHT7m+um5N42hffaVkeo4r89wX6aPsd3q+Yk333QEX3Z9BG1Qf/zVG/cTxQq0HcrFXgoewaKvmz66Hrxfclt+fXeW0Wc1nk5brV79VB770OC6Muij6iKb16GzcrZqleJ9zX++7fUfqv2YPZOhOjLpo9umOnGPS4SMkxhv9VaLQe7KTIMI/qy6JOBeoE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNSQGVQtNZstLpjudnTjc65nUahH/anLa/k+2i0oi+kaQ6qMx6PVViMD2N4f7G704ZXSa/aKSiD7Db4j00Rj09V8ejsv0dr/7Y/WH++pG/dlGObmqm5/1prwbtSBlf6t36NVa/vXv3euf9GXqfbxp/vPy6XjF3+/18pbyiL58+ogM+tNnJ4Gv9P9e/3S9OtyvlIz1Si821Wv61LLo9jVTy//aa/VlzV/3X7xvfnW6oj1EkeBARF8+fUQGffr+26NAncYm3Z++rzc3emvom67k75bqGwXuVEAK9avTFe0hBoi+fPqoDLr7vZbWNkqGAq+6E9QfI4HdMS1QvZdKj3phh1eoQxQJDkT05dNHZdB6/UItw9eVQyewrSJePXQVRT2pInQj+/ZGP4nmrI0Sr1680xXtIYoEByL68ukjM6hqdKyr3355EjhsZHedu41eqt/9rWlsN23o5i/6MrWm/+XT/rZvZKtz9CGKBAci+vLpk4F6gTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgTViUIE1YlCBNWJQgY4ufH0KYlCBjs2q3iRG5BWDZmP32fHH7x8c550X28SY5mJQVHbXld474FrtHNDUbu0PuhDZvnzSe12p3x/uOYSiz0HyTl7FDDrJyvbP6sWyi5Zt48nD/ZUK3t78bf3ySf+wv20cuv9KHdHmVP/5hsN2M8kMKgUzatuZtOqilEFnWVl3Py6Z/a0qGNXGA1qK2oRA/6DErptf6c0vWp1bHhvOAABWCiP6g1pqWnVRyKDzrDwHg277LuvEoI0xtTd14Tk8YwGAK4Uh/cG1tnJSdVHIoPOsXFCeWdn2e1h0udlnq9qGpXXqbV/atIUpfwIqhcFFk4Mp1UUpg86y8rwM2leDR4Me38jGo1d1n/H8CagUmr/8tdU/LVFTcra4QU8tmjMw6DA3d9erXlOTldvTgLXe6HIxBoVXCieDjg7WadUFhypeZ+U5GLR1XfPfth/04qE+1oftkU+6vF1OFR9QKQwMOjxYp72NRTtJw6w8B4PWm0bI4b7rSIx6FF19qLJ7s6QhC3iloHvuw63kui2R60UadJ6Vy8kzF9vB8EqTL1dtuaOyZ63zaN1n4VKGmQIqhVMJOjpYL7KKn2fleRjUzuSTyg9L0QqvFIadpMHBepGdpAtkO5w1kfqFOiPgSmHYBl2PKvsFDjNdIptTNq0XUsG7AX9nT6kuxKBCNFvYVLqk6kIMKsSzgdQEadWFGFRgjRhUYI0YVGCNGFRgjRhUYI0YVGCNGFRgjRhUYI0YVGCNGFRgjRhUYI0YVGCNGFRgjRhUYI0YVGCNGFRgjRhUYI0YVGBNvEErSt7GXYb4YAj0RYoacIH6Egwa/2z8PLt+eacx/AI3AzFvpnGKgnCJ+pZnUJs768vMQB4304hBa6c9LzMDedxMIwZ12/MyM5DHzTQXb1C3O+vLzEAeN9MUM+ju+sXf5luG5R6g8tozOkk89AG4RH2AZB6+ea8CmU0j8eQVCLBnbJJY6ANxifoAydx/8V5td6P+H3hlPJPaAmTP2CRl01eoil+2PngJunud8Q0caQXaM7GEoddXyKDL1gdJ5rbK3oYZaAXbMzpJufSV6iQtWh/7XjzcnpfZy+VxM01hg57aMN2X1+eWJmH4P/3a/fShAX7t25SnQ6/v19S7XKI+1iVoQO2uucQShsfNNPQl6Ea9WdAN6OkNGmhPf5IK6yM36DnqGxzbtto21TRi81ZXCdOdsikNWr2tgovP2pek4vqIDXqe+k7H9N61mknM+26/m4zDTFXTHqmC7elJEiN9sVyiPthA/eCPkCsjafzZ9I0i7h89kD34I/FmpFyivlEVb6oJTm/gp/kM+uHnD8/oBi2uj7yKP0d9p2OWmqDu9xHN1watPnz4+RndoOX10Rr0TPUN2qDmmiDobijc3VXPv8b409NGK66P1qBnqm9egkL3VSQyqO68q158BKASppy+PCXomekbHDPXBEF3S6cbW4rT6k5ScX3EbdDz1MfsS1I/9klh0JI308iXJA/+EvSqbBv0NDZPVIKW1Udfgp6hvnEbdPvJ+4ICB5+OCAxaXh99G/QM9U168fsvfiwmMPzT5hR/L7ekvnQuUd+gBP1aNa/3X5bqBab701PCFNaHwCXqG7VB1TjFdjrzOuRu8UymhtC0QQvqU5C3Qc9RH5Ne/LT4lF68iUvUNztWpJE9q97pDHpunYgp56aPRQk6b35KCWriEvVxMKiheyQGNXGJ+hgY1NR9F4OauER95Q1qHF4Sg5q4RH3FDWoe/hSDmrhEfaNj69X25Wy6a8jdgolYGefAl6T8+nC5RH0Qg+5ePWwrktApqPaMzkA6fchcoj6AQQ9fP6h1BASrAu3+pKnic+ubQF7Fn6M+gEH3X7zffUaxKtBRfuY0KJm+KYUMumx9kCr++wc1EUGJ9N0tDEf9ntOgZPqmFDLosvVBknm4V2sJptJTBTr7R1l78TT65pTqxS9aX7FhJnf/SIaZTFyiPngyp+H70gR6+u8FDIqrz0RZgy5UX6kS1DO+JCWoiUvUNzi2v13V69lwWdDdwPgGQCkMmlOfEWKDnqe+wbH1qm46gYZ+IH74PuQB+h53kjLqI+IS9Z2OqTbK5sYw4RU/fB+RP91JyqiPikvUNzKoGi6bC0QP3wfwJ0EVn0+fDfLYTOeo73SsedFUXJ/N1fQU7PB9kPKTZl18Hn1WyNfFn6O+wbHddbU63Bs+ReCG7wPV70SRRXLos0MfWeQM9WUfZoK1P2WYycQl6sttUGD/SAxq4hL1jXvx6xXxslVo/52mk0Svz0lKBurHdsb6NCwMCjtPDDqie6/PVl9HeYOCB0DFoAOO877OVN+R4galGqDvYZ6BUdwNpiWeo74hHoPetpNc6IJPUfvTk4Hk+gi4G82aPT99Ywr34kP8Kb14xd1kUve56ZtS1qBB5acYdG7Pc9M3p7RBA04Wg5pWxJyTPhM+g4Lb19a7OQhrgJIYlFQfgABR5gVb56PPTEmDBnaQLtqg87q940z0WfFW8evpTuOhd7MS2oGnWnaMeLNwYKKs9jwTfQ68Jegt1TBF8AATTQlKpg8GRJTDnmehz0mxTlL4AOiFdpKc9jwDfR68BlWvIMWiK+oB+h5fkqj0IeEN9bdwfV58BtVTr8EB/OACyb8g9XiSRKUPB0/pqVi0PgCgXrylK9huE+W7m5EYf9L14vH1gXGJAthz0fpARJaglo+8UIFR5SeJQWn0wbGLAsbxXaw+ILFt0N31TcIbGFW/03SSSPTBsYkCh5leqD4wvul29n1INy++jRUY1wAlmQ9Koi8As6iAKOiL1BeApwRdO6ZrHe6niwKBAiM7SBQlKIm+EEyigoL0L1BfEAU+dcZ24C/kU2fgHhKL0xdI2kB9TPi+6AGmiwi/GLzFycL0BeNpg37V//QD6EWEGRRyJwMUbVACfWGMRYEGlsYsSl8EnhJ0W92oPzYVbMoBQGC2EfoOd5Lw9SUQtUHUgvRF4a3iN6rkv5mdExu+L7c/vUlC1hdPROmpWIy+SCLboNHh+xL8mbMNmi08YS8qenu9heiLJtKgseH7UgrQnAbNHJ4wsvRULEJfAoklaGD4vqQKvkQJmic8YcpjWYK+FGLHQaPC96U1QLOOg2YKT1i9rRI3z+Wtb2ED9WkdpDMcqK+ef/1QpT0V1voWtiYpsQd/fmuSqucPP3/4kHZTzvrqZa1JSh1hOr81SdWHDz8/P5MaVNYkwa9MHQE9tzVJd3fVh+dfiQ1a8GYakvCS0/mgf55Ny7LhEph9iL4FMF8SR18gumtUPaf6k62+NO6OA28+gx7uV+vVdDzXikNgIX8CZpzj6Aujf/7p8zN46kvh7m44LAzoxa9XCPElEfxJ1YtH0RfE4PlTx6gvom9AqL6xO2tgCYqwKhCh/KRak4SiL4RhDlAbtIS+ISH67mburIG9+PR11RgVPF0vPuu68XEWkJeg2fWNAeszmVPh78VvTJNhLNgEojRAiXrxGPrgTDOBfhuavPqmBMSeggdHmx3bpI6joXSQ6IaZkvVBmedCln2SsumbAwztE6B/MLIAAAZjSURBVBZ7anxsXVWzrR5D7lZj9eCJDIqgD4gpH+gNmk+fCY8+jztrSBs0/VMZ0ggTURs016dAc0bQt0H5fur0u7POU4IijYAuuwS1ZMWllqAgcypAbdBtUhum1BB9C+SZp+mDkDalzgUPfWGA3VlDDLpNfAPL+tP/zFP1AaCzJw99QYS4s4a0QcHqLHdDyxuiNmiqPi/O7KBvg5LrczLRF2ZORexspt21ei8Ba1rwCo+ss5nA+nx4MqTUdtxo+jwM9AUWnR2Q2UyGLxFqTUvTsvELRKzccka3A+vz4csScoMS6/MxXLUa5QXAt3hjfMk2Luo0dtrsbpiNr6zxQYH6PPjzJMO3eEJ9XtSaq5iKfXAHzzFLhN42tOT+S9+qQMzOQc4Iy1B9TiC5kmE2E5k+P92aq5RiKrIEbdowagB4On4xvRtq7zVnCQrU5wKWLYVKUAR9ANSSlg+NQ5Pu4TuWtEsE6uhK1gjLcTc7AS01CrVBI28Wwp1a0tIYlGBJC/yOnvB9uMN/Swq/CK7VSvXiW8jCL7atzuqZZs3V4NjuuoJOdp3frfAQfYv78STps0I5MD+lhD4Ppx470Zqr0zHVlt6AZxPODRqZKEyczydNn4Wc9iyhz814PIlmzdXpmKoCdp+ZrgOE78POJ5JNFBL0mQm0J20VT6DPyXw8iXyXj/ezEH0aQPg+9HKEyqCR+owEl54ZDIqpz4F5KL6UQf3h+/DruZwGjQxPGF67FzIodvhF64ciaoOaNySDhO/Db4dRGDRen4GYxiexQVH12XB9KCoW+sYXvo+go5B7skhgGy2ub1RwsghKG9T3jZ1tbCaCjizr2EyxXfey46CJNwPMAOFqUIqRFsYGjR9ZWqxB72Dzk5galGQkkK1BUwY+l2lQ+OQ5ngZl8Qmpgz4Dy6rNb9DoqZ1REBk0+g7oUGdg3u9Gc/IaFFixI0JhUCIBHKv45MxaUhUfY06OVTzVC8bPoAhlyWIMGll08jRo9PVOuBkUpapbhEETKnaOBqWCmUFxmmL8DZrW6hSD+iDKQKyeAnODJveJxKA+SDIQryPL2KAoPXYxqA+CDMQcZ+FqUKzhJG4GpeRt3GXxzyaHvkhRAy5QH2U5CLl3znOwEX0ZzhGDxiP6xKCo52Aj+sSgqOdgI/rEoKjnYCP6xKCo52Aj+hZuUEFIRgwqsEYMKrBGDCqwRgwqsEYMKrBGDCqwRgwqsEYMKrCGyKBrHWVtW1XWDaJ1NMD2BOtp+hznrQ73endKz33wEX259NEYtNua5/OHacy/I/vbJtXtCdbT9DnuW22uVHRBz33wEX3Z9NEYtP2Hdq+f2uTNOXzzYxtvtTnBdlp3ju9W9ebGfR8CRF82fTQG3f5G7V+6bQrvta2OUMV/e4L9NH2O71bNSb77oCP6sukjaoP+56neuJ8oVKDvVk3F4L0PPqIvlz66Xnxfclt+vfdWEaew6o5b7V491N77kCD6sugjquKbl2GzcrbqVeJ9jf/+LbXfqj2YvRMh+rLpoxtmunGPi4QMU9hvtVaLVW+KDMOIviz6ZKBeYI0YVGCNGFRgjRhUYI0YVGCNGFRgjRhUYI0YVGCNGFRgjRhUYI0YVGCNGFRgjRhUYI0YVGCNGFRgjRhUYI0YVGANiUHVQpPZ8pLd6yfL6Yd7PZNaLeJfTU7b/8l2UUlE3whSfTQGvb4KEdj+5nB/oxenjE6zX1QS0Wf4DZE+GoO+/svDcZne7nd/rP5wX92oP9soJ1d18/MnannURi1I2d+q2Citln/9e/f6J32Zeh9vmv+8fDpe8fd7vbylPKIvnz4ig/702UngK/2/1z9drw73KyVjvdKLTfWaPrUsun3N1PK/9lp9WfPX/Rfvm1+drmgPUSQ4ENGXTx+RQZ++//YoUKexSfen7+vNzVYv4+tK/m6pvlHgTgWkUL86XdEeYoDoy6ePyqC732tpbaNkKPCqO0H9MRLYHdMC1Xup9KgXdniFOkSR4EBEXz59VAat1y/UMnxdOXQC2yri1UNXUdSTKkI3sm9v9JNoztoo8erFO13RHqJIcCCiL58+MoOqRse6+u2XJ4HDRnbXudvopfrd35rGdtOGbv6iL1Nr+l8+7W/7RrY6Rx+iSHAgoi+fPhmoF1gjBhVYIwYVWCMGFVgjBhVYIwYVWCMGFVgjBhVYIwYVWPNfQrFd2olGCxIAAAAASUVORK5CYII=" /><!-- --></p>
+<p>As seen from the MDES and power plots, a little less than 150 clusters are needed to obtain the benchmark power rate of 80% for the CRT (more than 200 clusters for the CRD). Precise number of clusters can be found via placing the primary constraint on either the effect size or power rate.</p>
+</div>
+<div id="primary-constraint-on-the-effect-size" class="section level2">
+<h2>Primary Constraint on the Effect Size</h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="co"># cost constrained - optimize p and n2</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="co"># CRT(&#39;order = 0&#39; or &#39;rhots = 0&#39;)</span></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="kw">cosa.crd2</span>(<span class="dt">order =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb18-4" title="4">          <span class="dt">constrain =</span> <span class="st">&quot;es&quot;</span>, <span class="dt">es =</span> <span class="fl">.20</span>,  </a>
+<a class="sourceLine" id="cb18-5" title="5">          <span class="dt">cn1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">cn2 =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb18-6" title="6">          <span class="dt">power =</span> <span class="fl">.80</span>, <span class="dt">rho2 =</span> <span class="fl">.20</span>,</a>
+<a class="sourceLine" id="cb18-7" title="7">          <span class="dt">g2 =</span> <span class="dv">1</span>, <span class="dt">r21 =</span> <span class="fl">.20</span>, <span class="dt">r22 =</span> <span class="fl">.30</span>, </a>
+<a class="sourceLine" id="cb18-8" title="8">          <span class="dt">p =</span> <span class="ot">NULL</span>, <span class="dt">n1 =</span> <span class="dv">20</span>,  <span class="dt">n2 =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## Solution converged with SLSQP 
+## 
+## Rounded solution: 
+## --------------------------------------------------- 
+##  [n1]  n2     p  cost [mdes] 95%lcl 95%ucl power
+##    20 144 0.389 13680    0.2   0.06   0.34   0.8
+## --------------------------------------------------- 
+## Per unit marginal costs: 
+##  Level 1 treatment: 5 
+##  Level 1 control: 2 
+##  Level 2 treatment: 50 
+##  Level 2 control: 20 
+## --------------------------------------------------- 
+## MDES = 0.2 (with power = 80) 
+## power = 0.8 (for ES = 0.2) 
+## --------------------------------------------------- 
+## []: point constrained (fixed) 
+## &lt;&lt;: bound constrained 
+## Random assignment design</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># comparisons to CRDs</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="co"># CRD w/ linear score variable</span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="kw">cosa.crd2</span>(<span class="dt">order =</span> <span class="dv">1</span>, <span class="dt">interaction =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb20-4" title="4">          <span class="dt">constrain =</span> <span class="st">&quot;es&quot;</span>, <span class="dt">es =</span> <span class="fl">.20</span>,  </a>
+<a class="sourceLine" id="cb20-5" title="5">          <span class="dt">cn1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">cn2 =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb20-6" title="6">          <span class="dt">power =</span> <span class="fl">.80</span>, <span class="dt">rho2 =</span> <span class="fl">.20</span>,</a>
+<a class="sourceLine" id="cb20-7" title="7">          <span class="dt">g2 =</span> <span class="dv">1</span>, <span class="dt">r21 =</span> <span class="fl">.20</span>, <span class="dt">r22 =</span> <span class="fl">.30</span>,</a>
+<a class="sourceLine" id="cb20-8" title="8">          <span class="dt">p =</span> <span class="fl">.386</span>, <span class="dt">n1 =</span> <span class="dv">24</span>,  <span class="dt">n2 =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<pre><code>## RDDE for normal distribution 
+##  based on population moments--------------------------------------- 
+## Polynomial order = 1 
+## Interaction w/ treatment = TRUE 
+## Treat if score &lt; cutoff = TRUE 
+## Cutoff = -0.29 | p = 0.386 
+## RDDE = 2.736 
+## 
+## Solution converged with SLSQP 
+## 
+## Rounded solution: 
+## --------------------------------------------------- 
+##  [n1]  n2   [p]  cost [mdes] 95%lcl 95%ucl power
+##    24 379 0.385 40664    0.2   0.06   0.34 0.799
+## --------------------------------------------------- 
+## Per unit marginal costs: 
+##  Level 1 treatment: 5 
+##  Level 1 control: 2 
+##  Level 2 treatment: 50 
+##  Level 2 control: 20 
+## --------------------------------------------------- 
+## MDES = 0.2 (with power = 80) 
+## power = 0.799 (for ES = 0.2) 
+## --------------------------------------------------- 
+## []: point constrained (fixed) 
+## &lt;&lt;: bound constrained 
+## Regression discontinuity design</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># CRD w/ linear + quadratic score variable</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="kw">cosa.crd2</span>(<span class="dt">order =</span> <span class="dv">2</span>, <span class="dt">interaction =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb23-3" title="3">          <span class="dt">constrain =</span> <span class="st">&quot;es&quot;</span>, <span class="dt">es =</span> <span class="fl">.20</span>,  </a>
+<a class="sourceLine" id="cb23-4" title="4">          <span class="dt">cn1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">cn2 =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb23-5" title="5">          <span class="dt">power =</span> <span class="fl">.80</span>, <span class="dt">rho2 =</span> <span class="fl">.20</span>,</a>
+<a class="sourceLine" id="cb23-6" title="6">          <span class="dt">g2 =</span> <span class="dv">1</span>, <span class="dt">r21 =</span> <span class="fl">.20</span>, <span class="dt">r22 =</span> <span class="fl">.30</span>,</a>
+<a class="sourceLine" id="cb23-7" title="7">          <span class="dt">p =</span> <span class="fl">.386</span>, <span class="dt">n1 =</span> <span class="dv">24</span>,  <span class="dt">n2 =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<pre><code>## RDDE for normal distribution 
+##  based on population moments--------------------------------------- 
+## Polynomial order = 2 
+## Interaction w/ treatment = TRUE 
+## Treat if score &lt; cutoff = TRUE 
+## Cutoff = -0.29 | p = 0.386 
+## RDDE = 4.992 
+## 
+## Solution converged with SLSQP 
+## 
+## Rounded solution: 
+## --------------------------------------------------- 
+##  [n1]  n2   [p]  cost [mdes] 95%lcl 95%ucl power
+##    24 691 0.386 74222    0.2   0.06   0.34   0.8
+## --------------------------------------------------- 
+## Per unit marginal costs: 
+##  Level 1 treatment: 5 
+##  Level 1 control: 2 
+##  Level 2 treatment: 50 
+##  Level 2 control: 20 
+## --------------------------------------------------- 
+## MDES = 0.2 (with power = 80) 
+## power = 0.8 (for ES = 0.2) 
+## --------------------------------------------------- 
+## []: point constrained (fixed) 
+## &lt;&lt;: bound constrained 
+## Regression discontinuity design</code></pre>
+</div>
+<div id="primary-constraint-on-the-power-rate" class="section level2">
+<h2>Primary Constraint on the Power Rate</h2>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="co"># cost constrained - optimize p and n2</span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="co"># CRT(&#39;order = 0&#39; or &#39;rhots = 0&#39;)</span></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="kw">cosa.crd2</span>(<span class="dt">order =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb26-4" title="4">          <span class="dt">constrain =</span> <span class="st">&quot;power&quot;</span>, <span class="dt">power =</span> <span class="fl">.80</span>, </a>
+<a class="sourceLine" id="cb26-5" title="5">          <span class="dt">cn1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">cn2 =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb26-6" title="6">          <span class="dt">es =</span> <span class="fl">.20</span>, <span class="dt">rho2 =</span> <span class="fl">.20</span>,</a>
+<a class="sourceLine" id="cb26-7" title="7">          <span class="dt">g2 =</span> <span class="dv">1</span>, <span class="dt">r21 =</span> <span class="fl">.20</span>, <span class="dt">r22 =</span> <span class="fl">.30</span>, </a>
+<a class="sourceLine" id="cb26-8" title="8">          <span class="dt">p =</span> <span class="ot">NULL</span>, <span class="dt">n1 =</span> <span class="dv">20</span>,  <span class="dt">n2 =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## Solution converged with SLSQP 
+## 
+## Rounded solution: 
+## --------------------------------------------------- 
+##  [n1]  n2     p  cost mdes 95%lcl 95%ucl [power]
+##    20 144 0.389 13680  0.2   0.06   0.34     0.8
+## --------------------------------------------------- 
+## Per unit marginal costs: 
+##  Level 1 treatment: 5 
+##  Level 1 control: 2 
+##  Level 2 treatment: 50 
+##  Level 2 control: 20 
+## --------------------------------------------------- 
+## MDES = 0.2 (with power = 80) 
+## power = 0.8 (for ES = 0.2) 
+## --------------------------------------------------- 
+## []: point constrained (fixed) 
+## &lt;&lt;: bound constrained 
+## Random assignment design</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co"># comparisons to CRDs</span></a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="co"># CRD w/ linear score variable</span></a>
+<a class="sourceLine" id="cb28-3" title="3"><span class="kw">cosa.crd2</span>(<span class="dt">order =</span> <span class="dv">1</span>, <span class="dt">interaction =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb28-4" title="4">          <span class="dt">constrain =</span> <span class="st">&quot;power&quot;</span>, <span class="dt">power =</span> <span class="fl">.80</span>, </a>
+<a class="sourceLine" id="cb28-5" title="5">          <span class="dt">cn1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">cn2 =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb28-6" title="6">          <span class="dt">es =</span> <span class="fl">.20</span>, <span class="dt">rho2 =</span> <span class="fl">.20</span>,</a>
+<a class="sourceLine" id="cb28-7" title="7">          <span class="dt">g2 =</span> <span class="dv">1</span>, <span class="dt">r21 =</span> <span class="fl">.20</span>, <span class="dt">r22 =</span> <span class="fl">.30</span>,</a>
+<a class="sourceLine" id="cb28-8" title="8">          <span class="dt">p =</span> <span class="fl">.386</span>, <span class="dt">n1 =</span> <span class="dv">24</span>,  <span class="dt">n2 =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<pre><code>## RDDE for normal distribution 
+##  based on population moments--------------------------------------- 
+## Polynomial order = 1 
+## Interaction w/ treatment = TRUE 
+## Treat if score &lt; cutoff = TRUE 
+## Cutoff = -0.29 | p = 0.386 
+## RDDE = 2.736 
+## 
+## Solution converged with SLSQP 
+## 
+## Rounded solution: 
+## --------------------------------------------------- 
+##  [n1]  n2   [p]  cost mdes 95%lcl 95%ucl [power]
+##    24 379 0.385 40664  0.2   0.06   0.34   0.799
+## --------------------------------------------------- 
+## Per unit marginal costs: 
+##  Level 1 treatment: 5 
+##  Level 1 control: 2 
+##  Level 2 treatment: 50 
+##  Level 2 control: 20 
+## --------------------------------------------------- 
+## MDES = 0.2 (with power = 80) 
+## power = 0.799 (for ES = 0.2) 
+## --------------------------------------------------- 
+## []: point constrained (fixed) 
+## &lt;&lt;: bound constrained 
+## Regression discontinuity design</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="co"># CRD w/ linear + quadratic score variable</span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="kw">cosa.crd2</span>(<span class="dt">order =</span> <span class="dv">2</span>, <span class="dt">interaction =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb31-3" title="3">          <span class="dt">constrain =</span> <span class="st">&quot;power&quot;</span>, <span class="dt">power =</span> <span class="fl">.80</span>,  </a>
+<a class="sourceLine" id="cb31-4" title="4">          <span class="dt">cn1 =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="dt">cn2 =</span> <span class="kw">c</span>(<span class="dv">50</span>, <span class="dv">20</span>),</a>
+<a class="sourceLine" id="cb31-5" title="5">          <span class="dt">es =</span> <span class="fl">.20</span>, <span class="dt">rho2 =</span> <span class="fl">.20</span>,</a>
+<a class="sourceLine" id="cb31-6" title="6">          <span class="dt">g2 =</span> <span class="dv">1</span>, <span class="dt">r21 =</span> <span class="fl">.20</span>, <span class="dt">r22 =</span> <span class="fl">.30</span>,</a>
+<a class="sourceLine" id="cb31-7" title="7">          <span class="dt">p =</span> <span class="fl">.386</span>, <span class="dt">n1 =</span> <span class="dv">24</span>,  <span class="dt">n2 =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<pre><code>## Warning: Ignoring &#39;cutoff&#39; using &#39;p&#39;</code></pre>
+<pre><code>## RDDE for normal distribution 
+##  based on population moments--------------------------------------- 
+## Polynomial order = 2 
+## Interaction w/ treatment = TRUE 
+## Treat if score &lt; cutoff = TRUE 
+## Cutoff = -0.29 | p = 0.386 
+## RDDE = 4.992 
+## 
+## Solution converged with SLSQP 
+## 
+## Rounded solution: 
+## --------------------------------------------------- 
+##  [n1]  n2   [p]  cost mdes 95%lcl 95%ucl [power]
+##    24 691 0.386 74222  0.2   0.06   0.34     0.8
+## --------------------------------------------------- 
+## Per unit marginal costs: 
+##  Level 1 treatment: 5 
+##  Level 1 control: 2 
+##  Level 2 treatment: 50 
+##  Level 2 control: 20 
+## --------------------------------------------------- 
+## MDES = 0.2 (with power = 80) 
+## power = 0.8 (for ES = 0.2) 
+## --------------------------------------------------- 
+## []: point constrained (fixed) 
+## &lt;&lt;: bound constrained 
+## Regression discontinuity design</code></pre>
+<p>–o–</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
