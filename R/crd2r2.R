@@ -1,5 +1,5 @@
 mdes.crd2r2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
-                        order = 2, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
+                        order = 1, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
                         power = .80, alpha = .05, two.tailed = TRUE,
                         df = n2 - g2 - order * (1 + interaction) - 2,
                         rho2, r21 = 0, r22 = 0, g2 = 0, rate.tp = 1, rate.cc = 0, n1, n2) {
@@ -74,7 +74,7 @@ mdes.crd2 <- mdes.crd2r2
 
 
 power.crd2r2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
-                         order = 2, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
+                         order = 1, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
                          es = .25, alpha = .05, two.tailed = TRUE,
                          df = n2 - g2 - order * (1 + interaction) - 2,
                          rho2, r21 = 0, r22 = 0, g2 = 0, rate.tp = 1, rate.cc = 0, n1, n2) {
@@ -146,7 +146,7 @@ power.crd2r2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
 power.crd2 <- power.crd2r2
 
 cosa.crd2r2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6, rhots = NULL,
-                        order = 2, interaction = FALSE,
+                        order = 1, interaction = FALSE,
                         treat.lower = TRUE, cutoff = 0, p = NULL,
                         cn1 = 0, cn2 = 0, cost = NULL,
                         n1 = NULL, n2 = NULL, n0 = c(10, 100), p0 = .499,

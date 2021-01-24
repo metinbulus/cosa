@@ -1,9 +1,9 @@
-\name{Vectorize BCOSA}
+\name{Vectorize BCOSSA}
 \alias{vectorize.cosa}
-\title{Vectorizes BCOSA Solutions}
+\title{Vectorizes BCOSSA Solutions}
 
 \description{
-  Vectorizes BCOSA solutions based on multiple sets of parameter values. This is particularly useful when multiple designs are to be considered.
+  Vectorizes bound constrained optimal sample size allocation (BCOSSA) solutions based on multiple sets of parameter values. This is particularly useful when multiple values of design parameters are to be considered.
 }
 
 \usage{
@@ -20,12 +20,12 @@
 
 \examples{
 
-design <- cosa.crd2r2(rhots = 0, round = FALSE,
-                      constrain = "es", power = .80,
-                      cn1 = c(20, 10), cn2 = c(200, 50),
-                      es = .25, rho2 = .10,
-                      g2 = 3, r22 = .30,
-                      n1 = NULL, n2 = NULL, p = NULL)
+design <- cosa.crd2(order = 0, round = FALSE,
+                    constrain = "power", power = .80,
+                    cn1 = c(20, 10), cn2 = c(200, 50),
+                    es = .25, rho2 = .10,
+                    g2 = 3, r22 = .30,
+                    n1 = NULL, n2 = NULL, p = NULL)
 
 args.grid <- expand.grid(
   rho2 = seq(.15, .25, .05)

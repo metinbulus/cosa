@@ -164,7 +164,7 @@
       n4 <- ss[4]
     }
     p <- ss[nlevels + 1]
-    return(abs(.power(es = es,  alpha = alpha,
+    return(abs(.power(es = es, alpha = alpha,
                       sse = eval(.sse), df = eval(.df),
                       two.tailed = two.tailed) - 1))
   }
@@ -182,7 +182,7 @@
       n4 <- ss[4]
     }
     p <- ss[nlevels + 1]
-    return(.power(es = es,  alpha = alpha,
+    return(.power(es = es, alpha = alpha,
                   sse = eval(.sse), df = eval(.df),
                   two.tailed = two.tailed) - .95)
   }
@@ -350,9 +350,9 @@
       stop("Incorrect value for argument 'local.solver'",  call. = FALSE)
     }
 
-    if(local.solver[i] %in% c("MMA", "COBYLA")) {
-      warning("Possibility of a local solution",  call. = FALSE)
-    }
+    #if(local.solver[i] %in% c("MMA", "COBYLA")) {
+    #  warning("Possibility of a local solution",  call. = FALSE)
+    #}
 
     if(constrain == "cost") {
       par0 <- try(nloptr::auglag(x0 = ss0, fn = .min.cost, gr = .cost.jac, heq = .start,
@@ -374,21 +374,21 @@
                        lower = sslb, upper = ssub,
                        control = list(ftol_abs = fabstol, maxeval = maxeval))
 
-    if(round) {
-      if(length(intersect(ss0, round(nlopt.ss$par, 1))) < nlevels - 1){
-        if(nlopt.ss$par[nlevels] %% 1 != 0) {
-          sslb.round <- sslb
-          ssub.round <- ssub
-          ss00.round <- ss00
-          ss00.round[nlevels] <- sslb.round[nlevels] <- ssub.round[nlevels] <- round(nlopt.ss$par[nlevels])
-          nlopt.ss <- nloptr::auglag(x0 = ss00.round, fn = fn.min, heq = fn.constr,
-                             gr = fn.min.jacob, heqjac = fn.constr.jacob,
-                             localsolver = local.solver[i], localtol = localtol,
-                             lower = sslb.round, upper = ssub.round,
-                             control = list(ftol_abs = fabstol, maxeval = maxeval))
-        }
-      }
-    }
+    # if(round) {
+    #   if(length(intersect(ss0, round(nlopt.ss$par, 1))) < nlevels - 1){
+    #     if(nlopt.ss$par[nlevels] %% 1 != 0) {
+    #       sslb.round <- sslb
+    #       ssub.round <- ssub
+    #       ss00.round <- ss00
+    #       ss00.round[nlevels] <- sslb.round[nlevels] <- ssub.round[nlevels] <- round(nlopt.ss$par[nlevels])
+    #       nlopt.ss <- nloptr::auglag(x0 = ss00.round, fn = fn.min, heq = fn.constr,
+    #                          gr = fn.min.jacob, heqjac = fn.constr.jacob,
+    #                          localsolver = local.solver[i], localtol = localtol,
+    #                          lower = sslb.round, upper = ssub.round,
+    #                          control = list(ftol_abs = fabstol, maxeval = maxeval))
+    #     }
+    #   }
+    # }
 
     if(nlopt.ss$convergence < 0 | all(nlopt.ss$par == ss0) | any(nlopt.ss$par <= 0)) {
       conv <- FALSE

@@ -104,6 +104,7 @@ plot.power <- plot.cosa <- plot.mdes <- function(x, score = NULL, ypar = "mdes",
   yout <- matrix(NA, nrow = length(xseq), ncol = 3)
   capture.output({
       for(i in 1:length(xseq)) {
+        #x$parms["p"]<- list(NULL)
         x$parms[[idx]] <- xseq[i]
         if(tolower(ypar) == "mdes") {
           yout[i,] <- do.call(paste("mdes", class(x)[2], sep = "."), x$parms)$mdes

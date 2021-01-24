@@ -2,7 +2,7 @@
 \alias{tnorm.moment}
 \alias{unif.moment}
 \alias{emp.moment}
-\title{Moments of Empirical, Truncated Normal, or Uniform Distributions}
+\title{Moments}
 
 \description{
   If data (vector) is provided use \code{emp.moment()} function, otherwise for truncated normal distribution use \code{tnorm.moment()}, and for uniform distribution use \code{unif.moment()}.

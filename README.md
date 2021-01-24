@@ -17,48 +17,41 @@ Note: `n` and `p` should be omitted (or specified as `NULL`) for optimization. `
 
 
 ```{r}
-score.obj <- inspect.score(rnorm(10000), cutoff = 0,
-                           order = 2, interaction = TRUE)                     
+# linear form interacting with the treatment
+score.obj <- inspect.score(rnorm(1000), cutoff = 0,
+                           order = 1, interaction = TRUE)
+
+## single site (no blocks)
 power.crd2(score.obj,
            es = .25, rho2 = .20, g2 = 0, r22 = 0,
-           n1 = 50, n2 = 100)
+           n1 = 50, n2 = 15)
 
-# with 5 blocks df = n2 - 2*(n blocks) - order * (1 + int) - g2
-# int  = 1 if interaction = TRUE
-# n2: number of level 2 units across five blocks
-power.crd2(score.obj, df = 100 - 2*5 - 2 * (1 + 1) - 1,
-           es = .25, rho2 = .20, g2 = 0, r22 = .30,
-           n1 = 50, n2 = 100)
-
-# compare
-# n2: number of level 2 units per block, n3: number of blocks
+## multiple sites (10 blocks)
+## note that r22 > 0 due to explanatory power of indciator variables for sites
 power.bcrd3f2(score.obj, 
               es = .25, rho2 = .20, g2 = 0, r22 = .30,
-              n1 = 50, n2 = 20, n3 = 5)
+              n1 = 50, n2 = 15, n3 = 10)
 
-# optimal combination of sample sizes for level 1 and level 2
-# that produce power = .80 (given range restriction for level 1 sample size)
-
-score.var <- rnorm(10000)
-
-# second order polynomial order
-cosa.bcrd3f2(score.var, cutoff = .50, treat.lower = TRUE,
-             order = 2, interaction = FALSE,
-             constrain = "power", power = .80,
+## minimum required number of level 2 units per site
+cosa.bcrd3f2(score.obj, 
              rho2 = .20, g2 = 0, r22 = .30,
-             n1 = c(20, 60), n2 = NULL, n3 = 5)
-             
-# second order polynomial order interacting with treatment
-cosa.bcrd3f2(score.var, cutoff = .50, treat.lower = TRUE,
+             n1 = 50, n2 = NULL, n3 = 10)
+
+
+# quadratic form interacting with the treatment
+score.obj2 <- inspect.score(rnorm(1000), cutoff = 0,
+                           order = 2, interaction = TRUE)
+
+## minimum required number of level 2 units per site
+cosa.bcrd3f2(score.obj2, 
              order = 2, interaction = TRUE, 
-             constrain = "power", power = .80,
              rho2 = .20, g2 = 0, r22 = .30,
-             n1 = c(20, 60), n2 = NULL, n3 = 5)
+             n1 = 50, n2 = NULL, n3 = 10)
 ```
 
 **Suggested citation**:
 
-Bulus, M. (2019). Minimum Detectable Effect Size Computations for Cluster-Level Regression Discontinuity: Quadratic Functional Form and Beyond. Retrieved October 30, 2019, from arXiv.org website: <https://arxiv.org/abs/1910.12925>
+Bulus, M. (2021). Minimum Detectable Effect Size Computations for Cluster-Level Regression Discontinuity: Specifications Beyond Linear Functional Form. *Journal of Research on Educational Effectiveness*. Accepted. 
 
 Bulus, M., & Dong, N. (2019). Bound Constrained Optimization of Sample Sizes Subject to Monetary Restrictions in Planning of Multilevel Randomized Trials and Regression Discontinuity Studies. *The Journal of Experimental Education*. Advance online publication. <https://doi.org/10.1080/00220973.2019.1636197>
 

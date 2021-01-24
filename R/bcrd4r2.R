@@ -1,5 +1,5 @@
 mdes.bcrd4r2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
-                         order = 2, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
+                         order = 1, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
                          power = .80, alpha = .05, two.tailed = TRUE, df = n4 - g4 - 1,
                          rho2, rho3, rho4, omega3, omega4,
                          r21 = 0, r22 = 0, r2t3 = 0, r2t4 = 0, g4 = 0,
@@ -77,7 +77,7 @@ mdes.bcrd4r2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
 }
 
 power.bcrd4r2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
-                          order = 2, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
+                          order = 1, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
                           es = .25, alpha = .05, two.tailed = TRUE, df = n4 - g4 - 1,
                           rho2, rho3, rho4, omega3, omega4,
                           r21 = 0, r22 = 0, r2t3 = 0, r2t4 = 0, g4 = 0,
@@ -153,7 +153,7 @@ power.bcrd4r2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
 }
 
 cosa.bcrd4r2 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6, rhots = NULL,
-                         order = 2, interaction = FALSE,
+                         order = 1, interaction = FALSE,
                          treat.lower = TRUE, cutoff = 0, p = NULL,
                          cn1 = 0, cn2 = 0, cn3 = 0, cn4 = 0, cost = NULL,
                          n1 = NULL, n2 = NULL, n3 = NULL, n4 = NULL,

@@ -1,5 +1,5 @@
 mdes.bcrd4f3 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
-                         order = 2, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
+                         order = 1, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
                          power = .80, alpha = .05, two.tailed = TRUE,
                          df = n4 * (n3 - 2) - g3 - order * (1 + interaction),
                          rho2, rho3, r21 = 0, r22 = 0, r23 = 0, g3 = 0,
@@ -74,7 +74,7 @@ mdes.bcrd4f3 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
 }
 
 power.bcrd4f3 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
-                          order = 2, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
+                          order = 1, interaction = FALSE, treat.lower = TRUE, cutoff = 0, p = NULL,
                           es = .25, alpha = .05, two.tailed = TRUE,
                           df = n4 * (n3 - 2) - g3 - order * (1 + interaction),
                           rho2, rho3, r21 = 0, r22 = 0, r23 = 0, g3 = 0,
@@ -147,7 +147,7 @@ power.bcrd4f3 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
 }
 
 cosa.bcrd4f3 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6, rhots = NULL,
-                         order = 2, interaction = FALSE,
+                         order = 1, interaction = FALSE,
                          treat.lower = TRUE, cutoff = 0, p = NULL,
                          cn1 = 0, cn2 = 0, cn3 = 0, cn4 = 0, cost = NULL,
                          n1 = NULL, n2 = NULL, n3 = NULL, n4 = NULL,

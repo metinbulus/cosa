@@ -26,24 +26,13 @@ unif.moment <- function(k1 = 0, k2 = 1, order = 1, central = FALSE) {
 
 # empirical moments
 emp.moment <- function(x, order = 1, central = FALSE, absolute = FALSE, na.rm = FALSE) {
-
   if(!is.numeric(x) | !is.vector(x)) stop("'x' should be a numeric vector", call. = FALSE)
-
-  if(na.rm) {
-    x <- x[!is.na(x)]
-  }
-
+  if(na.rm) {x <- x[!is.na(x)]}
   if(central) {
     x <- x - mean(x)
-    if(absolute) {
-      x <- abs(x)
-    }
+    if(absolute) {x <- abs(x)}
   }
-
-  if(absolute) {
-    x <- abs(x)
-  }
-
+  if(absolute) {x <- abs(x)}
   return(sum(x^order) / length(x))
 }
 
@@ -147,7 +136,6 @@ inspect.score <- function(score = NULL, p = NULL, cutoff = NULL,
   if(any(!is.numeric(pars) || length(pars) > 8)) stop("Incorrect value for one of the numeric argument", call. = FALSE)
   if(is.null(cutoff) & is.null(p)) stop("Specify one of the 'cutoff' or 'p' arguments", call. = FALSE)
   if(!is.null(cutoff) & !is.null(p)) warning("Ignoring 'cutoff' using 'p'", call. = FALSE)
-
   if(!is.logical(interaction)) stop("Non-logical value for argument 'interaction'", call. = FALSE)
   if(order < 1) stop("'order' < 1?", call. = FALSE)
   if(order %% 1 != 0) {
