@@ -51,7 +51,7 @@ cosa.bcrd3f2(score.obj2,
 
 **Suggested citation**:
 
-Bulus, M. (2021). Minimum Detectable Effect Size Computations for Cluster-Level Regression Discontinuity: Specifications Beyond Linear Functional Form. *Journal of Research on Educational Effectiveness*. Conditionally Accepted.
+Bulus, M. (2021). Minimum Detectable Effect Size Computations for Cluster-Level Regression Discontinuity: Specifications Beyond Linear Functional Form. *Journal of Research on Educational Effectiveness*. Conditionally accepted.
 
 Bulus, M., & Dong, N. (2019). Bound Constrained Optimization of Sample Sizes Subject to Monetary Restrictions in Planning of Multilevel Randomized Trials and Regression Discontinuity Studies. *The Journal of Experimental Education*. Advance online publication. <https://doi.org/10.1080/00220973.2019.1636197>
 
