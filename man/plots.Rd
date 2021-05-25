@@ -9,19 +9,19 @@
 }
 
 \usage{
-\method{plot}{power}(x, ypar = "mdes",  xpar = NULL,
+\method{plot}{power}(x, score = NULL, ypar = "mdes",  xpar = NULL,
           xlim = NULL, ylim = NULL,
           xlab = NULL, ylab = NULL,
           main = NULL, sub = NULL,
           locate = FALSE, benchmark = NULL, ...)
 
-\method{plot}{mdes}(x, ypar = "mdes",  xpar = NULL,
+\method{plot}{mdes}(x, score = NULL, ypar = "mdes",  xpar = NULL,
           xlim = NULL, ylim = NULL,
           xlab = NULL, ylab = NULL,
           main = NULL, sub = NULL,
           locate = FALSE, benchmark = NULL, ...)
 
-\method{plot}{cosa}(x, ypar = "mdes",  xpar = NULL,
+\method{plot}{cosa}(x, score = NULL, ypar = "mdes",  xpar = NULL,
           xlim = NULL, ylim = NULL,
           xlab = NULL, ylab = NULL,
           main = NULL, sub = NULL,
@@ -30,6 +30,7 @@
 
 \arguments{
   \item{x}{an object returned from functions in \pkg{cosa} package.}
+    \item{score}{vector or list; an empirical score variable or an object with class 'score' returned from the \code{inspect.score()} function.}
   \item{ypar}{character; \code{"mdes"} or  \code{"power"} on \code{y} axis.}
   \item{xpar}{character; one of the sample sizes on \code{x} axis.}
   \item{xlim}{limits for \code{xpar}.}

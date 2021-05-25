@@ -102,7 +102,8 @@ plot.power <- plot.cosa <- plot.mdes <- function(x, score = NULL, ypar = "mdes",
   ifelse(ypar == "mdes", y0 <- x$mdes[1], y0 <- x$power)
 
   yout <- matrix(NA, nrow = length(xseq), ncol = 3)
-  capture.output({
+  #capture.output({
+  suppressWarnings({
       for(i in 1:length(xseq)) {
         #x$parms["p"]<- list(NULL)
         x$parms[[idx]] <- xseq[i]
@@ -112,7 +113,8 @@ plot.power <- plot.cosa <- plot.mdes <- function(x, score = NULL, ypar = "mdes",
           yout[i,1] <- do.call(paste("power", class(x)[2], sep = "."), x$parms)$power
         }
       }
-  })
+  })#suppressWarnings
+  #})#capture.output
 
   if(is.null(ylim)) {
     ifelse(ypar == "mdes",

@@ -3,7 +3,7 @@ import("nloptr")
 importFrom("msm", "rtnorm", "qtnorm")
 importFrom("utils", "capture.output", "installed.packages")
 importFrom("stats", "pnorm", "dnorm", "qnorm", "punif", "qunif", "runif",
-           "quantile", "var", "sd", "cor", "dt", "pt", "qt")
+           "quantile", "var", "sd", "cor", "dt", "pt", "qt", "dunif", "integrate")
 importFrom("graphics", "plot", "abline", "points", "par", "polygon",
            "title", "axis", "box", "lines", "plot.new", "plot.window")
 importFrom("grDevices", "adjustcolor")

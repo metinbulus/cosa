@@ -7,11 +7,14 @@
 }
 
 \usage{
-  vectorize.cosa(design, args.grid, args.names = NULL, ordered = TRUE, ncase = 10L)
+  vectorize.cosa(x, score = NULL,
+               args.grid, args.names = NULL,
+               ordered = TRUE, ncase = 10L)
 }
 
 \arguments{
-  \item{design}{an object returned from one of the \code{cosa.<design>()} functions.}
+  \item{x}{an object returned from one of the \code{cosa.<design>()} functions.}
+  \item{score}{vector or list; an empirical score variable or an object with class 'score' returned from the \code{inspect.score()} function.}
   \item{args.grid}{vector or matrix: arguments' grid consisting of sets of parameter values. A vector of values (for a single parameter) or a matrix (for multiple parameters).}
   \item{args.names}{character list; arguments' names. Default option \code{args.names = NULL} uses column names from \code{args.grid}}
   \item{ordered}{logical: whether results should be ordered (cases with worst power rate or highest total cost are on top).}

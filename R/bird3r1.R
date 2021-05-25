@@ -8,7 +8,7 @@ mdes.bird3r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
   .error.handler(user.parms)
 
   if(df < 1) stop("Insufficient degrees of freedom", call. = FALSE)
-  if(!is.null(score) & order == 0) warning("Ignoring information from 'score' object \n", call. = FALSE)
+  if(!is.null(score) & order == 0) warning("Ignoring information from the 'score' object \n", call. = FALSE)
   if(order == 0) {
     d <- 1
     if(is.null(p)) stop("'p' cannot be NULL in random assignment designs", call. = FALSE)
@@ -26,7 +26,7 @@ mdes.bird3r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
                              treat.lower = treat.lower, cutoff = cutoff,
                              p = p, k1 = k1, k2 = k2, dists = dists)
     } else {
-      if("p" %in% names(user.parms)) warning("Using 'p' from 'score' object, ignoring 'p' in the function call", call. = FALSE)
+      if("p" %in% names(user.parms)) warning("Using 'p' from the 'score' object, ignoring 'p' in the function call", call. = FALSE)
       if(!inherits(score, "score")) {
         score <- inspect.score(score = score, order = order, interaction = interaction,
                                treat.lower = treat.lower, cutoff = cutoff,
@@ -84,7 +84,7 @@ power.bird3r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
   .error.handler(user.parms)
 
   if(df < 1) stop("Insufficient degrees of freedom", call. = FALSE)
-  if(!is.null(score) & order == 0) warning("Ignoring information from 'score' object \n", call. = FALSE)
+  if(!is.null(score) & order == 0) warning("Ignoring information from the 'score' object \n", call. = FALSE)
   if(order == 0) {
     d <- 1
     if(is.null(p)) stop("'p' cannot be NULL in random assignment designs", call. = FALSE)
@@ -102,7 +102,7 @@ power.bird3r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
                              treat.lower = treat.lower, cutoff = cutoff,
                              p = p, k1 = k1, k2 = k2, dists = dists)
     } else {
-      if("p" %in% names(user.parms)) warning("Using 'p' from 'score' object, ignoring 'p' in the function call", call. = FALSE)
+      if("p" %in% names(user.parms)) warning("Using 'p' from the 'score' object, ignoring 'p' in the function call", call. = FALSE)
       if(!inherits(score, "score")) {
         score <- inspect.score(score = score, order = order, interaction = interaction,
                                treat.lower = treat.lower, cutoff = cutoff,
@@ -162,7 +162,7 @@ cosa.bird3r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6, rhots 
                          g3 = 0, r21 = 0, r2t2 = 0, r2t3 = 0) {
 
   user.parms <- as.list(match.call())
-  .error.handler(user.parms)
+  .error.handler(user.parms, fun = "cosa")
 
   if(!is.null(rhots)) {
     if(rhots == 0) {
@@ -176,7 +176,7 @@ cosa.bird3r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6, rhots 
     }
   }
 
-  if(!is.null(score) & order == 0) warning("Ignoring information from 'score' object \n", call. = FALSE)
+  if(!is.null(score) & order == 0) warning("Ignoring information from the 'score' object \n", call. = FALSE)
   if(order == 0) {
     d <- 1
     idx.score <- intersect(c("dists", "k1", "k2", "interaction", "treat.lower", "cutoff"),  names(user.parms))
@@ -193,7 +193,7 @@ cosa.bird3r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6, rhots 
                              treat.lower = treat.lower, cutoff = cutoff,
                              p = p, k1 = k1, k2 = k2, dists = dists)
     } else {
-      if("p" %in% names(user.parms)) warning("Using 'p' from 'score' object, ignoring 'p' in the function call", call. = FALSE)
+      if("p" %in% names(user.parms)) warning("Using 'p' from the 'score' object, ignoring 'p' in the function call", call. = FALSE)
       if(!inherits(score, "score")) {
         score <- inspect.score(score = score, order = order, interaction = interaction,
                                treat.lower = treat.lower, cutoff = cutoff,

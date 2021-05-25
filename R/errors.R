@@ -1,4 +1,4 @@
-.error.handler <- function(x) {
+.error.handler <- function(x, fun = "power") {
 
   names.x <- names(x)
   if(any(!names.x %in% c("", "cost", "cn1", "cn2", "cn3", "cn4", "n0", "p0",
@@ -20,16 +20,24 @@
   names.x <- names(parms.notnull)
   x <- lapply(parms.notnull, eval)
 
-
   # validity check for sample sizes
   idx.n <- intersect(c("n1","n2","n3","n4", "df"),  names.x)
-  length.list.n <- length(unlist(x[idx.n]))
-  length.unlist.n <- length(x[idx.n])
+  length.unlist.n <- length(unlist(x[idx.n]))
+  length.list.n <- length(x[idx.n])
   if(length.list.n == length.unlist.n){
     if(any(x[idx.n] <= 0) ||
-       any(lapply(x[idx.n], function(x)!is.numeric(x)) == TRUE) ||
-       any(lapply(x[idx.n], length) > 1)) {
-      stop("Incorrect / insufficient sample size or degrees of freedom", call.=FALSE)
+       any(lapply(x[idx.n], function(x)!is.numeric(x)) == TRUE)) {
+      stop("Incorrect sample size or degrees of freedom", call.=FALSE)
+    }
+  } else {
+    if(fun == "cosa") {
+      # errro check for sample size in cosa functions
+      #if(any(x[idx.n] <= 0) ||
+      #   any(lapply(x[idx.n], function(x)!is.numeric(x)) == TRUE)) {
+      #  stop("Incorrect sample size or degrees of freedom", call.=FALSE)
+      #}
+    } else {
+      stop("Incorrect sample size or degrees of freedom", call.=FALSE)
     }
   }
 

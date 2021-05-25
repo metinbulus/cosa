@@ -8,7 +8,7 @@ mdes.ird1r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
   .error.handler(user.parms)
 
   if(df < 1) stop("Insufficient degrees of freedom", call. = FALSE)
-  if(!is.null(score) & order == 0) warning("Ignoring information from 'score' object \n", call. = FALSE)
+  if(!is.null(score) & order == 0) warning("Ignoring information from the 'score' object \n", call. = FALSE)
   if(order == 0) {
     d <- 1
     if(is.null(p)) stop("'p' cannot be NULL in random assignment designs", call. = FALSE)
@@ -26,7 +26,7 @@ mdes.ird1r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
                              treat.lower = treat.lower, cutoff = cutoff,
                              p = p, k1 = k1, k2 = k2, dists = dists)
     } else {
-      if("p" %in% names(user.parms)) warning("Using 'p' from 'score' object, ignoring 'p' in the function call", call. = FALSE)
+      if("p" %in% names(user.parms)) warning("Using 'p' from the 'score' object, ignoring 'p' in the function call", call. = FALSE)
       if(!inherits(score, "score")) {
         score <- inspect.score(score = score, order = order, interaction = interaction,
                                treat.lower = treat.lower, cutoff = cutoff,
@@ -80,7 +80,7 @@ power.ird1r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
   .error.handler(user.parms)
 
   if(df < 1) stop("Insufficient degrees of freedom", call. = FALSE)
-  if(!is.null(score) & order == 0) warning("Ignoring information from 'score' object \n", call. = FALSE)
+  if(!is.null(score) & order == 0) warning("Ignoring information from the 'score' object \n", call. = FALSE)
   if(order == 0) {
     d <- 1
     if(is.null(p)) stop("'p' cannot be NULL in random assignment designs", call. = FALSE)
@@ -98,7 +98,7 @@ power.ird1r1 <- function(score = NULL, dists = "normal", k1 = -6, k2 = 6,
                              treat.lower = treat.lower, cutoff = cutoff,
                              p = p, k1 = k1, k2 = k2, dists = dists)
     } else {
-      if("p" %in% names(user.parms)) warning("Using 'p' from 'score' object, ignoring 'p' in the function call", call. = FALSE)
+      if("p" %in% names(user.parms)) warning("Using 'p' from the 'score' object, ignoring 'p' in the function call", call. = FALSE)
       if(!inherits(score, "score")) {
         score <- inspect.score(score = score, order = order, interaction = interaction,
                                treat.lower = treat.lower, cutoff = cutoff,

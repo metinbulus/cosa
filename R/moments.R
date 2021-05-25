@@ -59,17 +59,18 @@ emp.moment <- function(x, order = 1, central = FALSE, absolute = FALSE, na.rm = 
       ifelse(isFALSE(treat.lower),
              treatment <- ifelse(score > cutoff, 1, 0),
              treatment <- ifelse(score < cutoff, 1, 0))
-      if(center == TRUE) score <- score - cutoff
+      score <- score - cutoff
       smat <- matrix(NA, nrow = length(score), ncol = order)
       for(j in 1:order) {
         smat[, j] <- score^j
       }
       ifelse(interaction,
-             xmat <- cbind(1, treatment, smat, treatment * smat),
-             xmat <- cbind(1, treatment, smat)
+             xmat <- cbind(treatment, smat, treatment * smat),
+             xmat <- cbind(treatment, smat)
       )
       pi <- mean(treatment)
-      rdde.temp <- try(solve(t(xmat) %*% xmat)[2,2] * pi * (1 - pi) * (ndraw - 1))
+      if(center) xmat <- scale(xmat, scale = FALSE) # mean centering
+      rdde.temp <- try(solve(t(xmat) %*% xmat)[1,1] * pi * (1 - pi) * (ndraw - 1))
       if(inherits(rdde.temp, "try-error")) rdde.temp <- NA
       temp[i,1] <- pi
       temp[i,2] <- mean(score)
@@ -85,7 +86,7 @@ emp.moment <- function(x, order = 1, central = FALSE, absolute = FALSE, na.rm = 
     k2 <- mean(temp[,5])
     rdde <- mean(temp[,6], na.rm = TRUE)
     if(length(temp[,6][is.na(temp[,6])]) / ndraw > .05) warning("Computational singularity issues, interpret results with caution", call. = FALSE)
-    message(cat("RDDE for", dists, "distribution \n based on simulation (approx. population moments)"))
+    message(cat("\nRDDE for", dists, "distribution \n based on simulation (approx. population moments)"))
   } else{
     if(!is.vector(score)) stop("Score variable should be a vector", call. = FALSE)
     sim <- FALSE
@@ -94,32 +95,32 @@ emp.moment <- function(x, order = 1, central = FALSE, absolute = FALSE, na.rm = 
            treatment <- ifelse(score > cutoff, 1, 0),
            treatment <- ifelse(score < cutoff, 1, 0))
     p <- mean(treatment)
-    if(center == TRUE) score <- score - cutoff
+    score <- score - cutoff
     smat <- matrix(NA, nrow = length(score), ncol = order)
     for(i in 1:order) {
       smat[, i] <- score^i
     }
     ifelse(interaction,
-           xmat <- cbind(1, treatment, smat, treatment * smat),
-           xmat <- cbind(1, treatment, smat)
+           xmat <- cbind(treatment, smat, treatment * smat),
+           xmat <- cbind(treatment, smat)
     )
     mu <- mean(score)
     sigma <- sd(score)
     k1 <- min(score)
     k2 <- max(score)
-    rdde <- try(solve(t(xmat) %*% xmat)[2,2] * p * (1 - p) * length(score))
+    if(center) xmat <- scale(xmat, scale = FALSE) # mean centering
+    rdde <- try(solve(t(xmat) %*% xmat)[1,1] * p * (1 - p) * length(score))
     if(inherits(rdde, "try-error")) rdde <- NA
-    message(cat("RDDE for empirical score distribution \n based on sample moments"))
+    message(cat("\nRDDE for empirical score distribution \n based on sample moments"))
   }
 
   if(!is.null(score)) dists <- "empirical"
   parms <- list(dists = dists, mu = mu, sigma = sigma, k1 = k1, k2 = k2, sim = sim, ndraw = ndraw, nsim = nsim)
   rdde.out <- list(parms = parms, cutoff = cutoff, treat.lower = treat.lower, p = p,
-                    order = order, interaction = interaction, center = center,
-                    rdde = rdde)
+                   order = order, interaction = interaction, center = center,
+                   rdde = rdde)
   class(rdde.out) <- "rdde"
-
-  return(invisible(rdde.out))
+    return(invisible(rdde.out))
 }
 
 
@@ -127,7 +128,7 @@ emp.moment <- function(x, order = 1, central = FALSE, absolute = FALSE, na.rm = 
 # mu: uncentered mean of the score var
 # k1: uncentered lower bound for the score var
 # k2: uncentered upper bound for the score var
-inspect.score <- function(score = NULL, p = NULL, cutoff = NULL,
+inspect.score <- function(score = NULL, p = NULL, cutoff = NULL, # center = TRUE,
                            treat.lower = FALSE, order = 1, interaction = FALSE,
                            mu = 0, sigma = 1, k1 = -Inf, k2 =  Inf,
                            dists = "normal", sim = FALSE, ndraw = 1000, nsim = 1000) {
@@ -162,50 +163,11 @@ inspect.score <- function(score = NULL, p = NULL, cutoff = NULL,
   }
   if(round(p,2) < .05 | round(p,2) > .95) stop("'cutoff' in the vicinity of bounds", call. = FALSE)
 
-  if(order < 3) {
-    if(is.null(score) & isTRUE(sim)) {
-      temp <- matrix(NA, nrow = nsim, ncol = 15)
-      for(i in 1:nsim) {
-        ifelse(dists == "normal",
-               score <- msm::rtnorm(ndraw, mean = mu, sd = sigma, lower = k1, upper = k2),
-               score <- runif(ndraw, k1, k2))
-        ifelse(isFALSE(treat.lower),
-               treatment <- ifelse(score > cutoff, 1, 0),
-               treatment <- ifelse(score < cutoff, 1, 0))
-        score <- score - cutoff
-        temp[i,1] <- mean(treatment)
-        temp[i,2] <- cor(treatment, score)
-        temp[i,3] <- cor(treatment, score^2)
-        temp[i,4] <- cor(score, score^2)
-        temp[i,5] <- cor(treatment, treatment*score)
-        temp[i,6] <- cor(treatment, treatment*score^2)
-        temp[i,7] <- cor(score, treatment*score)
-        temp[i,8] <- cor(score, treatment*score^2)
-        temp[i,9] <- cor(score^2, treatment*score)
-        temp[i,10] <- cor(score^2, treatment*score^2)
-        temp[i,11] <- cor(treatment*score, treatment*score^2)
-        temp[i,12] <- mean(score)
-        temp[i,13] <- var(score)
-        temp[i,14] <- min(score)
-        temp[i,15] <- max(score)
-      }
-      p <- mean(temp[,1])
-      rhots <- mean(temp[,2])
-      rhots2 <- mean(temp[,3])
-      rhoss2 <- mean(temp[,4])
-      rhotts <- mean(temp[,5])
-      rhotts2 <- mean(temp[,6])
-      rhosts <- mean(temp[,7])
-      rhosts2 <- mean(temp[,8])
-      rhos2ts <- mean(temp[,9])
-      rhos2ts2 <- mean(temp[,10])
-      rhotsts2 <- mean(temp[,11])
-      mu <- mean(temp[,12])
-      sigma <- sqrt(sum(temp[,13]) / nsim)
-      k1 <- mean(temp[,14])
-      k2 <- mean(temp[,15])
-      message(cat("RDDE for", dists, "distribution \n based on simulation (approx. population moments)"))
-    } else if(is.null(score) & isFALSE(sim)) {
+  if(order < 3 & isFALSE(sim)) {
+
+    if(is.null(score)) {
+
+      #if(isFALSE(center)) warning("Ignoring 'center = FALSE'. Analytic expressions assume centering", call. = FALSE)
       if(dists == "normal") {
         m1 <- tnorm.moment(mu = mu-cutoff, sigma = sigma, k1 = k1-cutoff, k2 = k2-cutoff, central = FALSE, order = 1)
         m2 <- tnorm.moment(mu = mu-cutoff, sigma = sigma, k1 = k1-cutoff, k2 = k2-cutoff, central = FALSE, order = 2)
@@ -263,51 +225,36 @@ inspect.score <- function(score = NULL, p = NULL, cutoff = NULL,
       rhos2ts <- sqrt(p) * (m3s0 - m2 * m1s0) / sqrt((m4 - m2^2) * (m2s0 - p * m1s0^2))
       rhos2ts2 <- sqrt(p) * (m4s0 - m2 * m2s0) / sqrt((m4 - m2^2) * (m4s0 - p * m2s0^2))
       rhotsts2 <- (m3s0 - p * m1s0 * m2s0) / sqrt((m2s0 - p * m1s0^2) * (m4s0 - p * m2s0^2))
-      message(cat("RDDE for", dists, "distribution \n based on population moments"))
+
+      corMat <- matrix(c(1, rhots, rhots2, rhotts, rhotts2,
+                         rhots, 1, rhoss2, rhosts, rhosts2,
+                         rhots2, rhoss2, 1, rhos2ts, rhos2ts2,
+                         rhotts, rhosts, rhos2ts, 1, rhotsts2,
+                         rhotts2, rhosts2, rhos2ts2, rhotsts2, 1),
+                       nrow = 5, ncol = 5, byrow = TRUE)
+      if(interaction) {
+        rdde <- switch(order,
+                       "1" = (1 - rhosts^2) / (1 - rhots^2 - rhotts^2 - rhosts^2 + 2*rhots*rhotts*rhosts),
+                       "2" = solve(corMat)[1,1])
+      } else {
+        rdde <- switch(order,
+                       "1" = 1 / (1 - rhots^2),
+                       "2" = (1 - rhoss2^2) / (1 - rhots^2 - rhots2^2 - rhoss2^2 + 2*rhots*rhots2*rhoss2))
+      }
+      message(cat("\nRDDE for", dists, "distribution \n based on population moments"))
+      parms <- list(dists = dists, mu = mu, sigma = sigma, k1 = k1, k2 = k2, sim = sim, ndraw = ndraw, nsim = nsim)
+      score.out <- list(parms = parms, cutoff = cutoff, treat.lower = treat.lower, p = p,
+                        order = order, interaction = interaction,
+                        rdde = rdde)
+
     } else if(!is.null(score)){
-      if(!is.vector(score)) stop("Score variable should be a vector", call. = FALSE)
-      score <- score[score < k2 & score > k1]
-      ifelse(isFALSE(treat.lower),
-             treatment <- ifelse(score > cutoff, 1, 0),
-             treatment <- ifelse(score < cutoff, 1, 0))
-      p <- mean(treatment)
-      score <- score - cutoff
-      rhots <- cor(treatment, score)
-      rhots2 <- cor(treatment, score^2)
-      rhoss2 <- cor(score, score^2)
-      rhotts <- cor(treatment, treatment*score)
-      rhotts2 <- cor(treatment, treatment*score^2)
-      rhosts <- cor(score, treatment*score)
-      rhosts2 <- cor(score, treatment*score^2)
-      rhos2ts <- cor(score^2, treatment*score)
-      rhos2ts2 <- cor(score^2, treatment*score^2)
-      rhotsts2 <- cor(treatment*score, treatment*score^2)
-      mu <- mean(score)
-      sigma <- sd(score)
-      k1 <- min(score)
-      k2 <- max(score)
-      dists <- "empirical"
-      message(cat("RDDE for empirical score distribution \n based on sample moments"))
+
+      score.out <- .rdde(score = score, treat.lower = treat.lower, dists = dists,
+                         order = order, interaction = interaction, cutoff = cutoff, center = TRUE,
+                         mu = mu, sigma = sigma, k1 = k1, k2 = k2, ndraw = ndraw, nsim = nsim)
+      rdde <- score.out$rdde
     }
-    corMat <- matrix(c(1, rhots, rhots2, rhotts, rhotts2,
-                       rhots, 1, rhoss2, rhosts, rhosts2,
-                       rhots2, rhoss2, 1, rhos2ts, rhos2ts2,
-                       rhotts, rhosts, rhos2ts, 1, rhotsts2,
-                       rhotts2, rhosts2, rhos2ts2, rhotsts2, 1),
-                     nrow = 5, ncol = 5, byrow = TRUE)
-    if(interaction) {
-      rdde <- switch(order,
-                     "1" = (1 - rhosts^2) / (1 - rhots^2 - rhotts^2 - rhosts^2 + 2*rhots*rhotts*rhosts),
-                     "2" = solve(corMat)[1,1])
-    } else {
-      rdde <- switch(order,
-                     "1" = 1 / (1 - rhots^2),
-                     "2" = (1 - rhoss2^2) / (1 - rhots^2 - rhots2^2 - rhoss2^2 + 2*rhots*rhots2*rhoss2))
-    }
-    parms <- list(dists = dists, mu = mu, sigma = sigma, k1 = k1, k2 = k2, sim = sim, ndraw = ndraw, nsim = nsim)
-    score.out <- list(parms = parms, cutoff = cutoff, treat.lower = treat.lower, p = p,
-                      order = order, interaction = interaction,
-                      rdde = rdde)
+
   } else {
     score.out <- .rdde(score = score, treat.lower = treat.lower, dists = dists,
                        order = order, interaction = interaction, cutoff = cutoff, center = TRUE,
@@ -316,7 +263,7 @@ inspect.score <- function(score = NULL, p = NULL, cutoff = NULL,
   }
 
   class(score.out) <- "score"
-  cat("\n---------------------------------------",
+  cat("---------------------------------------",
       "\nPolynomial order =", order, "\nInteraction w/ treatment =",  interaction,
       "\nTreat if score < cutoff =", treat.lower,
       "\nCutoff =", round(cutoff,3), "| p =", round(p,3), "\nRDDE =", round(rdde,3), "\n\n")
